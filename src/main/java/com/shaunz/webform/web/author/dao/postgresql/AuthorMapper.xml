@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.webform.web.author.dao.AuthorMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.webform.web.author.entity.Author" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="alias_nm" property="aliasNm" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+    <result column="lock_up" property="lockUp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, pwd, alias_nm, gender, email, close_flg, lock_up
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.tb_author
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from public.tb_author
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.webform.web.author.entity.Author" >
+    insert into public.tb_author (id, name, pwd, 
+      alias_nm, gender, email, 
+      close_flg, lock_up)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{aliasNm,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{closeFlg,jdbcType=VARCHAR}, #{lockUp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.webform.web.author.entity.Author" >
+    insert into public.tb_author
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="aliasNm != null" >
+        alias_nm,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+      <if test="lockUp != null" >
+        lock_up,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasNm != null" >
+        #{aliasNm,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="lockUp != null" >
+        #{lockUp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.webform.web.author.entity.Author" >
+    update public.tb_author
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasNm != null" >
+        alias_nm = #{aliasNm,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="lockUp != null" >
+        lock_up = #{lockUp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.webform.web.author.entity.Author" >
+    update public.tb_author
+    set name = #{name,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      alias_nm = #{aliasNm,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      close_flg = #{closeFlg,jdbcType=VARCHAR},
+      lock_up = #{lockUp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+	<select id="queryList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.tb_author
+    where close_flg = 'N' order by CAST(id AS integer) asc
+  </select>
+</mapper>

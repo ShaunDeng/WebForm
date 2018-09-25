@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.webform.web.image.dao.ImageMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.webform.web.image.entity.Image" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="css_class" property="cssClass" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, url, css_class, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_image
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_image
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.webform.web.image.entity.Image" >
+    insert into tb_image (id, name, url, 
+      css_class)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{cssClass,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.webform.web.image.entity.Image" >
+    insert into tb_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="cssClass != null" >
+        css_class,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="cssClass != null" >
+        #{cssClass,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.webform.web.image.entity.Image" >
+    update tb_image
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="cssClass != null" >
+        css_class = #{cssClass,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.webform.web.image.entity.Image" >
+    update tb_image
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      css_class = #{cssClass,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_image
+    where close_flg = 'N' order by cast(id as integer) asc
+  </select>
+</mapper>

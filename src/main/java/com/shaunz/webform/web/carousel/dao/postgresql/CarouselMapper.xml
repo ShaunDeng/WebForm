@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.webform.web.carousel.dao.CarouselMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.webform.web.carousel.entity.Carousel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="header" property="header" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="img_id" property="img_id" jdbcType="VARCHAR" />
+    <result column="button_id" property="buttonId" jdbcType="VARCHAR" />
+    <result column="post_time" property="postTime" jdbcType="VARCHAR" />
+    <result column="author_id" property="authorId" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="Carousel" type="com.shaunz.webform.web.carousel.entity.Carousel" extends="BaseResultMap">
+	<association property="image" column="img_id" javaType="com.shaunz.webform.web.image.entity.Image">
+		<id column="img_id" property="id" jdbcType="VARCHAR" />
+	   	<result column="img_name" property="name" jdbcType="VARCHAR" />
+	   	<result column="img_url" property="url" jdbcType="VARCHAR" />
+	   	<result column="img_css_class" property="cssClass" jdbcType="VARCHAR" />
+	</association>
+	<association property="button" column="button_id" javaType="com.shaunz.webform.web.button.entity.Button">
+		<id column="button_id" property="id" jdbcType="VARCHAR" />
+	   	<result column="button_name" property="name" jdbcType="VARCHAR" />
+	   	<result column="button_url" property="url" jdbcType="VARCHAR" />
+	   	<result column="button_css_class" property="cssClass" jdbcType="VARCHAR" />
+	</association>
+	<association property="author" column="author_id" javaType="com.shaunz.webform.web.author.entity.Author">
+		<id column="author_id" property="id" jdbcType="VARCHAR" />
+	   	<result column="author_name" property="name" jdbcType="VARCHAR" />
+	   	<result column="author_pwd" property="pwd" jdbcType="VARCHAR" />
+	   	<result column="author_alias_nm" property="aliasNm" jdbcType="VARCHAR" />
+	   	<result column="author_gender" property="gender" jdbcType="VARCHAR" />
+	   	<result column="author_email" property="email" jdbcType="VARCHAR" />
+	   	<result column="author_close_flg" property="closeFlg" jdbcType="VARCHAR" />
+	   	<result column="author_lock_up" property="lockUp" jdbcType="VARCHAR" />
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, header, content, img_id, button_id, post_time, author_id, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_carousel
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_carousel
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.webform.web.carousel.entity.Carousel" >
+    insert into tb_carousel (id, name, header, 
+      content, img_id, button_id, 
+      post_time, author_id)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{header,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{img_id,jdbcType=VARCHAR}, #{buttonId,jdbcType=VARCHAR}, 
+      #{postTime,jdbcType=VARCHAR}, #{authorId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.webform.web.carousel.entity.Carousel" >
+    insert into tb_carousel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="header != null" >
+        header,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="img_id != null" >
+        img_id,
+      </if>
+      <if test="buttonId != null" >
+        button_id,
+      </if>
+      <if test="postTime != null" >
+        post_time,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null" >
+        #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img_id != null" >
+        #{img_id,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonId != null" >
+        #{buttonId,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.webform.web.carousel.entity.Carousel" >
+    update tb_carousel
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null" >
+        header = #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img_id != null" >
+        img_id = #{img_id,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonId != null" >
+        button_id = #{buttonId,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        post_time = #{postTime,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.webform.web.carousel.entity.Carousel" >
+    update tb_carousel
+    set name = #{name,jdbcType=VARCHAR},
+      header = #{header,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      img_id = #{img_id,jdbcType=VARCHAR},
+      button_id = #{buttonId,jdbcType=VARCHAR},
+      post_time = #{postTime,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="quaryAll" resultMap="Carousel">
+  	select carousel.id,carousel.name,carousel.header,carousel.content,carousel.img_id,carousel.button_id,carousel.post_time,carousel.author_id,
+	img.id img_id,img.name img_name,img.url img_url,img.css_class img_css_class,
+	button.id button_id,button.name button_name,button.url button_url,button.css_class button_css_class,
+	author.id author_id,author.name author_name,author.pwd author_pwd,author.alias_nm author_alias_nm, 
+	author.gender author_gender,author.email author_email,author.close_flg author_close_flg,author.lock_up author_lock_up 
+	from tb_carousel carousel
+	left join tb_image img on img.id = carousel.img_id and img.close_flg = 'N'
+	left join tb_button button on button.id = carousel.button_id and button.close_flg = 'N'
+	left join tb_author author on author.id = carousel.author_id and author.close_flg = 'N'
+	where carousel.close_flg = 'N'
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_carousel
+    where close_flg = 'N' order by cast(id as integer) asc
+  </select>
+</mapper>

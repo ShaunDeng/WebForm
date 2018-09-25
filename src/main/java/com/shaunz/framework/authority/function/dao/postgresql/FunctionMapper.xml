@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.framework.authority.function.dao.FunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.framework.authority.function.entity.Function" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+    <result column="tb_nm" property="tableNm" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, parent_id, url, close_flg,tb_nm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_function
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_function
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.framework.authority.function.entity.Function" >
+    insert into tb_function (id, name, parent_id, 
+      url, close_flg)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.framework.authority.function.entity.Function" >
+    insert into tb_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.framework.authority.function.entity.Function" >
+    update tb_function
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.framework.authority.function.entity.Function" >
+    update tb_function
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      close_flg = #{closeFlg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryAll" resultMap="BaseResultMap">
+	  select 
+	  <include refid="Base_Column_List" />
+	  from tb_function
+	  where close_flg = 'N' order by CAST(id AS integer) asc
+  </select>
+  <select id="queryAllAuthorizedFunctionByUsrId" parameterType="string" resultMap="BaseResultMap">
+	  select distinct func.* from tb_function func
+		inner join tb_role_function_authority auth on auth.function_id = func.id
+		inner join tb_user_role usr_rol on usr_rol.role_id = auth.role_id
+		where usr_rol.user_id = #{usrId,jdbcType=VARCHAR}
+	  	and close_flg = 'N'
+	   	order by name
+  </select>
+  <select id="findObjBy" parameterType="string" resultType="java.util.Map">
+    select * from ${tableNm} where id=#{1}
+  </select>
+    <select id="queryObjLstBy" parameterType="string" resultType="java.util.Map">
+    select * from ${tableNm} where close_flg = 'N'
+  </select>
+</mapper>

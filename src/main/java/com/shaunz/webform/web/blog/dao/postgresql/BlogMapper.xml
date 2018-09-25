@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.webform.web.blog.dao.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.webform.web.blog.entity.Blog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="header_type" property="headerType" jdbcType="VARCHAR" />
+    <result column="header" property="header" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="post_time" property="postTime" jdbcType="VARCHAR" />
+    <result column="author_id" property="authorId" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="Blog" type="com.shaunz.webform.web.blog.entity.Blog" extends="BaseResultMap">
+	<association property="author" column="author_id" javaType="com.shaunz.webform.web.author.entity.Author">
+		<id column="author_id" property="id" jdbcType="VARCHAR" />
+	   	<result column="author_name" property="name" jdbcType="VARCHAR" />
+	   	<result column="author_pwd" property="pwd" jdbcType="VARCHAR" />
+	   	<result column="author_alias_nm" property="aliasNm" jdbcType="VARCHAR" />
+	   	<result column="author_gender" property="gender" jdbcType="VARCHAR" />
+	   	<result column="author_email" property="email" jdbcType="VARCHAR" />
+	   	<result column="author_close_flg" property="closeFlg" jdbcType="VARCHAR" />
+	   	<result column="author_lock_up" property="lockUp" jdbcType="VARCHAR" />
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, header_type, header, content, post_time, author_id, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_blog_dtl
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_blog_dtl
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.webform.web.blog.entity.Blog" >
+    insert into tb_blog_dtl (id, name, header_type, 
+      header, content, post_time, 
+      author_id)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{headerType,jdbcType=VARCHAR}, 
+      #{header,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{postTime,jdbcType=VARCHAR}, 
+      #{authorId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.webform.web.blog.entity.Blog" >
+    insert into tb_blog_dtl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="headerType != null" >
+        header_type,
+      </if>
+      <if test="header != null" >
+        header,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="postTime != null" >
+        post_time,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="headerType != null" >
+        #{headerType,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null" >
+        #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.webform.web.blog.entity.Blog" >
+    update tb_blog_dtl
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="headerType != null" >
+        header_type = #{headerType,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null" >
+        header = #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        post_time = #{postTime,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.webform.web.blog.entity.Blog" >
+    update tb_blog_dtl
+    set name = #{name,jdbcType=VARCHAR},
+      header_type = #{headerType,jdbcType=VARCHAR},
+      header = #{header,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      post_time = #{postTime,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPageId" resultMap="Blog" parameterType="map" >
+    select dtl.id,dtl.name,dtl.header_type,dtl.header,dtl.content,dtl.post_time,dtl.author_id,
+	author.id author_id,author.name author_name,author.pwd author_pwd,author.alias_nm author_alias_nm,
+	author.gender author_gender,author.email author_email,author.close_flg author_close_flg,author.lock_up author_lock_up
+	from tb_blog_dtl dtl
+	inner join tb_blog_page_map map on map.blog_id = dtl.id
+	left join tb_author author on author.id = dtl.author_id
+	where map.page_type = #{pageType} and map.page_id = #{pageId}
+	order by map.order_id asc
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_blog_dtl
+    where close_flg = 'N'
+  </select>
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_blog_dtl
+    where close_flg = 'N'
+  </select>
+</mapper>

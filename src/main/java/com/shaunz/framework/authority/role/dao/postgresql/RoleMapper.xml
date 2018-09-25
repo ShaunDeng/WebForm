@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.framework.authority.role.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.framework.authority.role.entity.Role" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, parent_id, close_flg, start_time, end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.framework.authority.role.entity.Role" >
+    insert into tb_role (id, name, parent_id, 
+      close_flg, start_time, end_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{closeFlg,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.framework.authority.role.entity.Role" >
+    insert into tb_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="closeFlg != null" >
+        close_flg,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.framework.authority.role.entity.Role" >
+    update tb_role
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null" >
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.framework.authority.role.entity.Role" >
+    update tb_role
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      close_flg = #{closeFlg,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	  select role.id, role.name, role.parent_id, role.close_flg, role.start_time, role.end_time
+	  	from tb_role role 
+		inner join tb_user_role user_role on user_role.role_id = role.id
+		inner join tb_user usr on usr.id = user_role.user_id
+		where usr.id = #{usrId,jdbcType=VARCHAR}
+		<![CDATA[and COALESCE(role.start_time,current_timestamp) <= current_timestamp and COALESCE(role.end_time,current_timestamp) >= current_timestamp]]>
+		and role.close_flg = 'N'
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaunz.framework.authority.role.entity.Role" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_role
+    <where>
+    	close_flg = 'N'
+	    <if test="name != null" >
+	        name = #{name,jdbcType=VARCHAR},
+	   	</if>
+	   	<if test="parentId != null" >
+	        parent_id = #{parentId,jdbcType=VARCHAR},
+	   	</if>
+   	</where>
+  </select>
+  <select id="getAuthorityBy" resultType="java.util.Map" parameterType="java.lang.String">
+  	select * from tb_role_function_authority where role_id = #{roleId}
+  </select>
+  <insert id="insertRoleFunctionAuthorityMapSelective" parameterType="java.util.Map" >
+  	insert into tb_role_function_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="role_id != null" >
+        role_id,
+      </if>
+      <if test="function_id != null" >
+        function_id,
+      </if>
+      <if test="authority_id != null" >
+        authority_id,
+      </if>
+      <if test="lock_up != null" >
+        lock_up,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="role_id != null" >
+        #{role_id,jdbcType=VARCHAR},
+      </if>
+      <if test="function_id != null" >
+        #{function_id,jdbcType=VARCHAR},
+      </if>
+      <if test="authority_id != null" >
+        #{authority_id,jdbcType=VARCHAR},
+      </if>
+      <if test="lock_up != null" >
+        #{lock_up,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteRoleFunctionAuthorityMapBy" parameterType="java.lang.String" >
+    delete from tb_role_function_authority
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

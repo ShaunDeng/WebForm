@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaunz.webform.web.blogmap.dao.BlogMapMapper" >
+  <resultMap id="BaseResultMap" type="com.shaunz.webform.web.blogmap.entity.BlogMap" >
+    <result column="page_id" property="pageId" jdbcType="VARCHAR" />
+    <result column="page_type" property="pageType" jdbcType="VARCHAR" />
+    <result column="blog_id" property="blogId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    page_id, page_type, blog_id, order_id
+  </sql>
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaunz.webform.web.blogmap.entity.BlogMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_blog_page_map
+    <where>
+      <if test="pageId != null" >
+        and page_id = #{pageId,jdbcType=VARCHAR}
+      </if>
+      <if test="pageType != null" >
+        and page_type = #{pageType,jdbcType=VARCHAR}
+      </if>
+      <if test="blogId != null" >
+        and blog_id = #{blogId,jdbcType=VARCHAR}
+      </if>
+      <if test="orderId != null" >
+        and order_id = #{orderId,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by cast(page_id as integer),page_type,cast(order_id as integer) asc
+  </select>
+  <insert id="insert" parameterType="com.shaunz.webform.web.blogmap.entity.BlogMap" >
+    insert into tb_blog_page_map (page_id, page_type, blog_id, 
+      order_id)
+    values (#{pageId,jdbcType=VARCHAR}, #{pageType,jdbcType=VARCHAR}, #{blogId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.webform.web.blogmap.entity.BlogMap" >
+    insert into tb_blog_page_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pageId != null" >
+        page_id,
+      </if>
+      <if test="pageType != null" >
+        page_type,
+      </if>
+      <if test="blogId != null" >
+        blog_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pageId != null" >
+        #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageType != null" >
+        #{pageType,jdbcType=VARCHAR},
+      </if>
+      <if test="blogId != null" >
+        #{blogId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateOrderByPageNBlog" parameterType="com.shaunz.webform.web.blogmap.entity.BlogMap" >
+    update tb_blog_page_map
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+      <if test="pageId != null" >
+        and page_id = #{pageId,jdbcType=VARCHAR}
+      </if>
+      <if test="pageType != null" >
+        and page_type  = #{pageType,jdbcType=VARCHAR}
+      </if>
+      <if test="blogId != null" >
+        and blog_id  = #{blogId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+  <delete id="delete" parameterType="com.shaunz.webform.web.blogmap.entity.BlogMap">
+  	delete from tb_blog_page_map
+  	<where>
+		<if test="pageId != null" >
+		 and page_id = #{pageId,jdbcType=VARCHAR}
+		</if>
+		<if test="pageType != null" >
+		  and page_type = #{pageType,jdbcType=VARCHAR}
+		</if>
+		<if test="blogId != null" >
+		  and blog_id = #{blogId,jdbcType=VARCHAR}
+		</if>
+		<if test="orderId != null" >
+		  and order_id = #{orderId,jdbcType=VARCHAR}
+		</if>
+  	</where>
+  </delete>
+</mapper>
