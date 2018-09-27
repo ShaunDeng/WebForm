@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+	<nav class="navbar navbar-inverse navbar-static-top">
+	    <div class="container">
+	      <div class="navbar-header">
+	        <a class="navbar-brand" href="#" th:attr="href=${application.homePageObject.homeUrl}" th:text="${application.homePageObject.projectNm}">Project Name</a>
+	      </div>
+	      <div id="navbar" class="navbar-collapse collapse">
+	        <ul class="nav navbar-nav">
+	        <th:block th:each="naviBar : ${application.homePageObject.navigationBars}">
+	        	<li th:if="${naviBar.type eq 'normal'}"
+	        			th:class="${naviBar.id eq navBarId}?'active':''">
+	        		<a href="#" th:href="${naviBar.active eq 'active'}?${application.homePageObject.homeUrl}:${naviBar.url+'?navBarId='+naviBar.id}"
+	        			th:text="${naviBar.name}">Home</a>
+	        	</li>
+	        	<li th:if="${naviBar.type eq 'dropdown'}" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+							th:href="${naviBar.url}" th:text="${naviBar.name}">DropDown <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li th:each="downList : ${naviBar.downLists}" th:if="${downList.type eq 'normal'}">
+							<a href="#" th:href="${downList.url+'?dropDownLstId='+downList.id}" th:text="${downList.name}">Text Option</a>
+						</li>
+						<li class="divider" role="separator" th:each="downList : ${naviBar.downLists}" th:if="${downList.type eq 'separator'}"></li>
+						<li class="dropdown-header" th:each="downList : ${naviBar.downLists}" th:if="${downList.type eq 'dropdown_header'}" th:text="${downList.name}">Header Option</li>
+					</ul>
+				</li>
+	        </th:block>
+	        </ul>
+	        <ul class="nav navbar-nav navbar-right">
+	          <li>
+	          	<a id="signInURL" th:href="${application.homePageObject.signInURL}" href="#"></a>
+	          </li>
+	        </ul>
+	      </div>
+	    </div>
+	</nav>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		var signInText = [[#{homepage.signin}]];
+		$('document').ready(function(){
+			$.ajax({
+				url: './signCheck',
+				type: 'GET',
+				success: function(data,status){
+					if(data != null){
+						var user = jQuery.parseJSON(data);
+						if(user.aliasNm != null)
+							$('#signInURL').html('<i class="glyphicon glyphicon-user"></i> '+user.aliasNm);
+						else
+							$('#signInURL').html('<i class="glyphicon glyphicon-log-in"></i> ' + signInText);
+					} else {
+						$('#signInURL').html(signInText);
+					}
+					
+				},
+				error: function(){
+					$('#signInURL').html(signInText);
+				}
+			});
+		});
+		/*]]>*/
+	</script>
+</html>

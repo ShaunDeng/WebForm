@@ -33,7 +33,7 @@ public class SignInController extends BaseController{
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/signIn.html",method=RequestMethod.GET)
+	@RequestMapping(value="/signIn.html",method={RequestMethod.GET,RequestMethod.POST})
 	public String signInPage(){
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated()){
@@ -47,7 +47,7 @@ public class SignInController extends BaseController{
 		return "SignUp";
 	}
 	
-	@RequestMapping(value="/signIn",method=RequestMethod.POST)
+	@RequestMapping(value="/signIn",method={RequestMethod.POST})
 	public String doSignIn(User user,Model model,Locale locale){
 		String msg = "";
 		Subject subject = SecurityUtils.getSubject();

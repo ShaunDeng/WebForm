@@ -1,0 +1,42 @@
+<functions>
+	<function id="5" title="navigationbar">
+		<tableHeader>
+			# name type url active
+		</tableHeader>
+		<tableColumn>
+			id name type url active
+		</tableColumn>
+	</function>
+	<function id="9" title="image">
+		<tableHeader>
+			# name url cssclass
+		</tableHeader>
+		<tableColumn>
+			id name url css_class
+		</tableColumn>
+	</function>
+	<function id="10" title="button">
+		<tableHeader>
+			# name url cssclass
+		</tableHeader>
+		<tableColumn>
+			id name url css_class
+		</tableColumn>
+	</function>
+	<function id="14" title="author">
+		<tableHeader>
+			# aliasNm gender email
+		</tableHeader>
+		<tableColumn>
+			id alias_nm gender email
+		</tableColumn>
+	</function>
+	<function id="15" title="dropdownlist">
+		<tableHeader>
+			# name url type parentId
+		</tableHeader>
+		<tableColumn>
+			id name url type parentId
+		</tableColumn>
+	</function>	
+</functions>

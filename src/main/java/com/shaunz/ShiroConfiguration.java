@@ -20,6 +20,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.shaunz.framework.shiro.realm.ShaunzRealm;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+
 @Configuration
 public class ShiroConfiguration {
 	@Bean
@@ -45,7 +47,9 @@ public class ShiroConfiguration {
 		filterChainDefinitionMap.put("/navBar.html", "anon");
 		filterChainDefinitionMap.put("/dropDownLst.html", "anon");
 		filterChainDefinitionMap.put("/marketInfo.html", "anon");
-		filterChainDefinitionMap.put("/staticResources/**", "anon");
+		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/webresources/**", "anon");
+		filterChainDefinitionMap.put("/customerResources/**", "anon");
 		filterChainDefinitionMap.put("/signIn.html", "anon");
 		filterChainDefinitionMap.put("/signUp.html", "anon");
 		filterChainDefinitionMap.put("/signCheck", "anon");
@@ -117,5 +121,14 @@ public class ShiroConfiguration {
 			throw new RuntimeException(e.getMessage());
 		}
 		return cookieRememberMeManager;
+	}
+	
+	/**
+	 * Use shiro tag in thymeleaf
+	 * @return
+	 */
+	@Bean
+	public ShiroDialect shiroDialect(){
+		return new ShiroDialect();
 	}
 }

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${application.homePageObject.projectNm}">Project Name</title>
+	<meta name="description" content="description" th:attr="content=${application.homePageObject.description}"/>
+	<meta name="keywords" content="keywords" th:attr="content=${application.homePageObject.keywords}"/>
+	<meta name="author" content="Shaun Xiong Deng" />
+	<link rel="icon" href="" th:href="@{${application.homePageObject.iconURL}}">
+</html>

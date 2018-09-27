@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+<html>
+<head>
+	<div th:replace="common/header::html"></div>
+    <link href="../../static/webresources/css/bootstrap.min.css" rel="stylesheet" type="text/css" th:href="@{/webresources/css/bootstrap.min.css}">
+    <link href="../../static/webresources/projectResources/css/carousel.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/carousel.css}">
+	<link href="../../static/webresources/projectResources/css/signin.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/signin.css}">
+</head>
+<body>
+	<div class="container">
+      <form class="form-signin" onsubmit="/signIn" method="post">
+      	<div class="alert alert-danger" role="alert" th:if="${errMsg != null}" th:inlune="text">
+ 			<strong>Oh snap!</strong> [[${errMsg}]]
+		</div>
+        <h2 class="form-signin-heading" th:unless="${errMsg != null}" th:text="#{signinpage.header}"></h2>
+        <label for="inputEmail" class="sr-only" th:text="#{signinpage.loginnm}"></label>
+        <input type="email" id="inputUserNM" name="inputUserNM" class="form-control" th:attr="placeholder=#{signinpage.loginnm}" required autofocus>
+        <label for="inputPassword" class="sr-only" th:text="#{signinpage.pwd}"></label>
+        <input type="password" id="inputPwd" name="inputPwd" class="form-control" th:attr="placeholder=#{signinpage.pwd}" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="rememberMe" value="remember-me" th:text="#{signinpage.rememberme}">
+          </label>
+          <a class="right" href="./signUp.html" th:text="#{signinpage.signup}"></a>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{signinpage.signin}"></button>
+      </form>
+    </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.shaunz.webform.web.common;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.servlet.ServletContext;
 import org.springframework.stereotype.Service;
 
 import com.shaunz.framework.common.source.service.SourceService;
+import com.shaunz.framework.common.utils.IArrayListUtil;
 import com.shaunz.framework.web.base.BaseService;
 import com.shaunz.webform.web.carousel.dao.CarouselMapper;
 import com.shaunz.webform.web.carousel.entity.Carousel;
@@ -56,6 +58,7 @@ public class HomePageGenerator extends BaseService{
 		
 		List<MarketInfo> marketInfos = marketInfoMapper.quaryAll();
 		homePage.setMarketInfos(marketInfos);
+		homePage.setGrpedMarketInfos(grpMarketInfo(marketInfos));
 		
 		
 		servletContext.setAttribute("homePageObject", homePage);
@@ -68,5 +71,23 @@ public class HomePageGenerator extends BaseService{
 	
 	private String getSystemYear(){
 		return ""+Calendar.getInstance().get(Calendar.YEAR);
+	}
+	
+	@SuppressWarnings(value = { "all" })
+	private List grpMarketInfo(List<MarketInfo> marketInfos){
+		List grpedMarketInfos = new ArrayList();
+		if(!IArrayListUtil.isBlankList(marketInfos)){
+			List<MarketInfo> marketInfosGrp = null;
+			for (int i = 0; i < marketInfos.size(); i++) {
+				if((i+1)%3 == 1){
+					marketInfosGrp = new ArrayList<MarketInfo>();
+				}
+				marketInfosGrp.add(marketInfos.get(i));
+				if(((i+1)%3 == 0) || (i+1) == marketInfos.size()){
+					grpedMarketInfos.add(marketInfosGrp);
+				}
+			}
+		}
+		return grpedMarketInfos;
 	}
 }

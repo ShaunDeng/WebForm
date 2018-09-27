@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../../static/webresources/css/bootstrap.min.css" rel="stylesheet" type="text/css" th:href="@{/webresources/css/bootstrap.min.css}">
+    <link href="../../static/webresources/projectResources/css/carousel.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/carousel.css}">
+</head>
+<body>
+	<div class="navbar-wrapper">
+	  <div class="container">
+	    <div th:replace="common/navBar::html"></div>
+	    <th:block th:each="blog : ${blogs}">
+	    	<th:block th:if="${blog.headerType eq 'h1'}">
+	    		<h1 class="blog-title" th:text="${blog.header}"></h1>
+	    	</th:block>
+	    	<th:block th:if="${blog.headerType ne 'h1'}">
+	    		<h3 class="blog-post-title" th:text="${blog.header}"></h3>
+	    	</th:block>
+	    	<th:block th:if="${blog.postTime != null}">
+	    		<p class="blog-post-meta" th:text="${blog.postTime}">
+	    		<th:block th:if="${blog.author != null}">
+	    			 by <a href="#" th:text="${blog.author.aliasNm}">Admin</a>
+	    		</th:block>
+	    	</th:block>
+	    	<p th:utext="${blog.content}"></p>
+	    </th:block>
+	  </div>
+	</div>
+	<div class="container">
+		<div th:replace="common/copyright::html"></div>
+	</div>
+</body>
+</html>

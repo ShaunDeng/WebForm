@@ -1,9 +1,10 @@
 package com.shaunz.framework.web.base;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BaseService {
-	protected  Logger logger = Logger.getLogger(this.getClass());
+	protected  Logger logger = LoggerFactory.getLogger(BaseService.class);
 }

@@ -16,6 +16,7 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.shaunz.framework.common.source.service.SourceService;
@@ -71,24 +72,28 @@ public class ShaunzApplicationListener implements ApplicationListener<Applicatio
 		    homePageGenerator.generateHomePage(servletContext);
 		    
 		    //Load functionFields.xml
-		    String functionFieldXmlPath = servletContext.getRealPath("/")+"WEB-INF/classes/functionFields.xml";
-		    File xml = new File(functionFieldXmlPath);
-		    if(xml.exists()){
-		    	try {
-		    		FunctionFieldsXml functionFieldsXml =(FunctionFieldsXml) JavaXmlBindUtil.unMarShallXml(new FileInputStream(xml), FunctionFieldsXml.class);
-		    		functionFieldsXml.init();
-		    		servletContext.setAttribute("functionFieldsXml", functionFieldsXml);
-		    		logger.info("Set functionFieldsXml into Servlet Context success!");
-				} catch (FileNotFoundException e1) {
-					logger.error(e1.getMessage());
-				} catch (JAXBException e1) {
-					logger.error(e1.getMessage());
-				} catch (Exception e1){
-					logger.error(e1.getMessage());
-				}
-		    } else {
-		    	logger.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
-		    }
+		    File xml;
+			try {
+				xml = ResourceUtils.getFile("classpath:functionFields.xml");
+				if(xml.exists()){
+			    	try {
+			    		FunctionFieldsXml functionFieldsXml =(FunctionFieldsXml) JavaXmlBindUtil.unMarShallXml(new FileInputStream(xml), FunctionFieldsXml.class);
+			    		functionFieldsXml.init();
+			    		servletContext.setAttribute("functionFieldsXml", functionFieldsXml);
+			    		logger.info("Set functionFieldsXml into Servlet Context success!");
+					} catch (FileNotFoundException e1) {
+						logger.error(e1.getMessage());
+					} catch (JAXBException e1) {
+						logger.error(e1.getMessage());
+					} catch (Exception e1){
+						logger.error(e1.getMessage());
+					}
+			    } else {
+			    	logger.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
+			    }
+			} catch (FileNotFoundException e2) {
+				logger.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
+			}
 	    }
 	    
 	    logger.info("Application Refreshed...");

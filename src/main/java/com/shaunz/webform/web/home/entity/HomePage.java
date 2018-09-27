@@ -21,6 +21,7 @@ public class HomePage implements Serializable{
 	private List<NavigationBar> navigationBars;
 	private List<Carousel> carousels;
 	private List<MarketInfo> marketInfos;
+	private List grpedMarketInfos;
 	private String signInURL;
 	private String signUpURL;
 	public String getTitle() {
@@ -101,4 +102,19 @@ public class HomePage implements Serializable{
 	public void setSignUpURL(String signUpURL) {
 		this.signUpURL = signUpURL;
 	}
+	/**
+	 * @return the grpedMarketInfos
+	 */
+	@SuppressWarnings(value = { "all" })
+	public List getGrpedMarketInfos() {
+		return grpedMarketInfos;
+	}
+	/**
+	 * @param grpedMarketInfos the grpedMarketInfos to set
+	 */
+	@SuppressWarnings(value = { "all" })
+	public void setGrpedMarketInfos(List grpedMarketInfos) {
+		this.grpedMarketInfos = grpedMarketInfos;
+	}
+	
 }

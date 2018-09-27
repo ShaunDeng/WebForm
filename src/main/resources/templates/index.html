@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+<head>
+    <link href="../../static/webresources/css/bootstrap.min.css" rel="stylesheet" type="text/css" th:href="@{/webresources/css/bootstrap.min.css}">
+    <link href="../../static/webresources/projectResources/css/carousel.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/carousel.css}">
+	<div th:replace="common/header::html"></div>
+</head>
+<body>
+	<script src="../../static/webresources/js/jquery.min.js" type="text/javascript" th:src="@{/webresources/js/jquery.min.js}"></script>
+	<script src="../../static/webresources/js/bootstrap.min.js" type="text/javascript" th:src="@{/webresources/js/bootstrap.min.js}"></script>
+	<!--/* Navigation bar include menu,dropdown link etc...*/-->
+	<div class="navbar-wrapper">
+	  <div class="container">
+	  	<div th:replace="common/navBar::html"></div>
+	  </div>
+	</div>
+	<!--/* Carousel include image,button,text etc...*/-->
+	<div id="szCarousel" class="carousel slide" data-ride="carousel">
+		<!--/* Indicators */-->
+		<ol class="carousel-indicators">
+			<li data-target="#szCarousel" data-slide-to="1" th:each="carousel,carouselStat : ${application.homePageObject.carousels}"
+				th:class="${carouselStat.first}?'active':''" th:attr="data-slide-to=${carouselStat.index+1}"></li>
+		</ol>
+		<!--/* Carousel context */-->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active" th:each="carousel,carouselStat : ${application.homePageObject.carousels}" th:class="${carouselStat.first}?'item active':'item'">
+				<img th:class="${carousel.image.cssClass}" th:attr="alt=${carousel.image.name}" th:src="${#strings.startsWith(carousel.image.url,'/')}?@{${carousel.image.url}}:${carousel.image.url}"/>
+				<div class="container">
+					<div class="carousel-caption">
+						<h1 th:text="${carousel.header}"></h1>
+						<p th:text="${carousel.content}"></p>
+						<p><a th:class="${carousel.button.cssClass}" th:href="${#strings.startsWith(carousel.button.url,'.')}?${carousel.button.url+'?carouselId='+carousel.id}:${carousel.button.url}"
+							th:text="${carousel.button.name}" role="button" ></a>
+					</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/* The slide buttons */-->
+		<a class="left carousel-control" href="#szCarousel" role="button" data-slide="prev">
+		  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		  <span class="sr-only" th:text="#{homepage.previous}"></span>
+		</a>
+		<a class="right carousel-control" href="#szCarousel" role="button" data-slide="next">
+		  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		  <span class="sr-only" th:text="homepage.next"></span>
+		</a>
+	</div>
+
+    <!--/* Marketing messaging and featurettes*/-->
+    <!--/*================================================== */-->
+    <!--/*Wrap the rest of the page in another container to center all the content. */-->
+    <div class="container marketing">
+   		<div class="row" th:each="grpedMarketInfo : ${application.homePageObject.grpedMarketInfos}">
+			<div class="col-lg-4" th:each="marketInfo:${grpedMarketInfo}">
+				<img th:class="${marketInfo.image.cssClass}" th:src="${#strings.startsWith(marketInfo.image.url,'/')}?@{${marketInfo.image.url}}:${marketInfo.image.url}"
+					th:attr="alt=${marketInfo.image.name}" width="140" height="140">
+				<h2 th:text="${marketInfo.header}"></h2>
+				<p th:text="${marketInfo.content}"></p>
+				<p>
+				<a th:class="${marketInfo.button.cssClass}" th:href="${#strings.startsWith(marketInfo.button.url,'.')}?${marketInfo.button.url+'?marketInfoId='+marketInfo.id}:${marketInfo.button.url}"
+					th:text="${marketInfo.button.name + '&raquo;'}" role="button"></a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<!--/* Footer including copyright,goback link etc...*/-->
+	<div class="container">
+		<div th:replace="common/copyright::html"></div>
+	</div>
+</body>
+</html>
