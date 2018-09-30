@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+<style>
+</style>
+  <body>
+  		<h2 class="sub-header" ><a href="#" id="header" th:text="#{user.title}"></a></h2>
+       	<form id="accAddForm">
+       	  <div class="form-group row">
+		    <label for="loginName" class="col-sm-2 col-form-label" th:text="#{user.userNm}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="loginName" name="loginName" 
+		    		th:attr="placeholder=#{user.userNm.placeHolder}" required="true"  maxlength="100"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="email" class="col-sm-2 col-form-label" th:text="#{user.email}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" 
+		    		th:attr="placeholder=#{user.email.placeHolder}" required="true"  maxlength="50"/>
+		    	<small id="emailHelp" class="form-text text-muted" th:text="#{user.email.help}"></small>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="password" class="col-sm-2 col-form-label" th:text="#{user.password}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="password" class="form-control" id="password" name="password" 
+		    		th:attr="placeholder=user.password.placeHolder" required="true"  maxlength="100"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="aliasName" class="col-sm-2 col-form-label" th:text="#{user.aliasNm}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="aliasName" name="aliasNm" 
+		    		th:attr="placeholder=#{user.aliasNm.placeHolder}" required="true"  maxlength="100"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{user.gender}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<select class="form-control" id="gender" name="gender">
+				  <option selected="true" value="Male" th:text="#{user.gender.male}"></option>
+				  <option value="Female" th:text="#{user.gender.female}"></option>
+				</select>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="orgPath" class="col-sm-2 col-form-label" th:text="#{user.organization}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="orgPath" name="orgPath" aria-describedby="emailHelp" 
+		    		th:attr="placeholder=#{user.organization.placeHolder}" maxlength="100">
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		  	<label for="startTime" class="col-sm-2 col-form-label" th:text="#{user.startTime}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerFrom'>
+               	<input type="text" class="form-control" id="startTime" name="startTime" th:attr="placeholder=#{user.startTime.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+          	<label for="endTime" class="col-sm-2 col-form-label" th:text="#{user.endTime}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerTo'>
+               	<input type="text" class="form-control" id="endTime" name="endTime" th:attr="placeholder=#{user.endTime.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+		    <label for="lockUpN" class="col-sm-2 col-form-label" th:text="#{user.lockUp}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpY" value="Y"/>
+				  <label class="form-check-label" for="lockUpY" th:text="#{common.yes}"></label>
+				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpN" value="N" checked="true"/>
+				  <label class="form-check-label" for="lockUpN" th:text="#{common.no}"></label>
+				</div>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:text="' '+#{common.submit}"></button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:text="' '+#{common.reset}"></button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:text="' '+#{common.goBack}"></button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var fromDatePicker = $('#datetimepickerFrom').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        var toDatePicker = $('#datetimepickerTo').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        
+        $('#accAddForm').validate({
+        	debug: false,
+        	onfocusout: false,
+        	rules: {
+				loginName: {
+					required: true,
+					minlength: 2,
+					maxlength: 100,
+					remote: '/user/userNmExistCk'
+				},
+				email: {
+					required: true,
+					email: true,
+					remote: '/user/userEmailExistCk'
+				},
+				password: {
+					required: true,
+					minlength: 8,
+					maxlength: 100
+				},
+				aliasNm: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				orgPath: {
+					maxlength: 100
+				}
+			},
+			messages: {
+				loginName: {
+					required: [[#{validation.user.loginName.required}]],
+					minlength: [[#{validation.user.loginName.minlength(${2})}]],
+					maxlength: [[#{validation.user.loginName.maxlength(${100})}]],
+					remote: [[#{validation.user.loginName.registered}]]
+				},
+				email: {
+					required: [[#{validation.user.email}]],
+					email: [[#{validation.user.email}]],
+					remote: [[#{validation.user.email.registered}]]
+				},
+				password: {
+					required: [[#{validation.user.password.required}]],
+					minlength: [[#{validation.user.password.minlength(${8})}]],
+					maxlength: [[#{validation.user.password.maxlength(${100})}]]
+				},
+				aliasNm: {
+					required: [[#{validation.user.aliasNm.required}]],
+					minlength: [[#{validation.user.aliasNm.minlength(${2})}]],
+					maxlength: [[#{validation.user.aliasNm.maxlength(${100})}]]
+				},
+				orgPath: {
+					maxlength: [[#{validation.user.orgPath(${100})}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./user','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./mngpages/account_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./mngpages/account_lst.html');
+        });
+    });
+	</script>
+</html>

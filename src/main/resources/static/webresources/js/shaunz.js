@@ -186,10 +186,10 @@ Shaunz.alert = function(type,title,info){
 		$('body').append(newDiv);
 	}
 	window.setTimeout(function() {
-	    $(".alter-box").fadeTo(500, 0).slideUp(500, function(){
+	    $(".alter-box").fadeTo(1000, 0).slideUp(1000, function(){
 	        $(this).remove(); 
 	    });
-	}, 5000);
+	}, 8000);
 };
 
 Shaunz.showSuccess = function(title,info){

@@ -8,7 +8,6 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.shaunz.framework.authority.function.entity.Function;
@@ -17,7 +16,9 @@ import com.shaunz.framework.authority.role.entity.Role;
 import com.shaunz.framework.authority.role.service.RoleService;
 import com.shaunz.framework.authority.user.entity.User;
 import com.shaunz.framework.authority.user.service.UserService;
+import com.shaunz.framework.common.utils.EncryptUtil;
 import com.shaunz.framework.common.utils.IArrayListUtil;
+import com.shaunz.framework.core.YgdrasilConst;
 import com.shaunz.framework.web.base.BaseController;
 
 @RequiresRoles("admin")
@@ -31,17 +32,17 @@ public class ManagePlantController extends BaseController{
 	FunctionService functionService;
 	
 	
-	@RequestMapping(value="/managePlant.html",method=RequestMethod.POST)
+	@RequestMapping(value="/managePlant.html")
 	public String managePlantPage(){
 		return "managePlantPage";
 	}
 	
-	@RequestMapping(value="mngpages/dashboard.html",method=RequestMethod.GET)
+	@RequestMapping(value="mngpages/dashboard.html")
 	public String dashboardPage(){
 		return "mngpages/dashboard";
 	}
 	
-	@RequestMapping(value="mngpages/detail.html",method=RequestMethod.GET)
+	@RequestMapping(value="mngpages/detail.html")
 	public ModelAndView detailPage(String functionId,String objId){
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("functionId", functionId);
@@ -49,26 +50,27 @@ public class ManagePlantController extends BaseController{
 		return new ModelAndView("mngpages/detail_page",result);
 	}
 	
-	@RequestMapping(value="/mngpages/account_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/account_lst.html")
 	public String accountLstPage(){
 		return "mngpages/account_lst";
 	}
 	
-	@RequestMapping(value="/mngpages/account_add.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/account_add.html")
 	public String accountAddPage(){
 		return "mngpages/account_add";
 	}
 	
-	@RequestMapping(value="/mngpages/account_edit.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/account_edit.html")
 	public ModelAndView accountEditPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.selectByPrimaryKey(id);
 		user.dateConverter();
+		user.setPassword(YgdrasilConst.PWD_PLACEHOLDER_STRING);
 		result.put("user", user);
 		return new ModelAndView("mngpages/account_edit", result);
 	}
 	
-	@RequestMapping(value="/mngpages/account_grant.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/account_grant.html")
 	public ModelAndView userGrantPage(String userId){
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.selectByPrimaryKey(userId);
@@ -89,17 +91,17 @@ public class ManagePlantController extends BaseController{
 		return new ModelAndView("mngpages/account_grant", result);
 	}
 	
-	@RequestMapping(value="/mngpages/role_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/role_lst.html")
 	public String roleLstPage(){
 		return "mngpages/role_lst";
 	}
 	
-	@RequestMapping(value="/mngpages/role_add.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/role_add.html")
 	public String roleAddpage(){
 		return "mngpages/role_add";
 	}
 	
-	@RequestMapping(value="/mngpages/role_edit.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/role_edit.html")
 	public ModelAndView roleEditPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		Role role = roleService.selectByPrimaryKey(id);
@@ -108,7 +110,7 @@ public class ManagePlantController extends BaseController{
 		return new ModelAndView("mngpages/role_edit", result);
 	}
 	
-	@RequestMapping(value="/mngpages/role_grant.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/role_grant.html")
 	public ModelAndView roleGrantPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<Function> functions = functionService.queryAllFunctions();
@@ -134,12 +136,12 @@ public class ManagePlantController extends BaseController{
 		return new ModelAndView("mngpages/role_grant", result);
 	}
 	
-	@RequestMapping(value="/mngpages/function_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/function_lst.html")
 	public String functionLstPage(){
 		return "mngpages/function_lst";
 	}
 	
-	@RequestMapping(value="/mngpages/syslog_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/mngpages/syslog_lst.html")
 	public String syslogLstPage(){
 		return "mngpages/syslog_lst";
 	}

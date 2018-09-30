@@ -24,7 +24,7 @@ public interface FunctionMapper {
     
     List<Function> queryAllAuthorizedFunctionByUsrId(String usrId);
     
-    Map<String, Object> findObjBy(@Param("tableNm")String tableNm,String objId);
+    Map<String, Object> findObjBy(@Param("tableNm")String tableNm,@Param("objId")String objId);
     
     List<Map<String, Object>> queryObjLstBy(@Param("tableNm")String tableNm);
 }

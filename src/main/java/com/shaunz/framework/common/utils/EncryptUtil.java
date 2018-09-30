@@ -384,11 +384,5 @@ public class EncryptUtil
 	    }
 	    return null;
 	}
-	public static void main(String[] args) {
-		String s="yJzROAz1RREm4WqVA5OGIg==";
-		
-		System.out.println(EncryptUtil.decryptString(s));
-		
-	}
 }
 

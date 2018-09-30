@@ -20,7 +20,6 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.shaunz.framework.authority.authority.service.AuthorityService;
@@ -29,6 +28,7 @@ import com.shaunz.framework.authority.role.service.RoleService;
 import com.shaunz.framework.authority.user.entity.User;
 import com.shaunz.framework.authority.user.service.UserService;
 import com.shaunz.framework.common.source.service.SourceService;
+import com.shaunz.framework.common.utils.EncryptUtil;
 import com.shaunz.framework.common.utils.IStringUtil;
 
 @Component
@@ -81,7 +81,7 @@ public class ShaunzRealm extends AuthorizingRealm{
 		}
 		SimpleAuthenticationInfo authInfo = new SimpleAuthenticationInfo(
 				user.getLoginName(),
-                user.getPassword(),
+                EncryptUtil.decryptString(user.getPassword()),
                 getName() 
         );
 		return authInfo;

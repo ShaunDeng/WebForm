@@ -1,12 +1,12 @@
-<%@ include file="../common/common.jsp"%>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
 	<body>
 		<div class="row">
 	          <table class="table table-bordered">
 	            <thead>
 	              <tr>
-	                <th><spring:message code="common.FieldName"/></th>
-	                <th><spring:message code="common.value"/></th>
+	                <th th:text="#{common.FieldName}"></th>
+	                <th th:text="#{common.value}"></th>
 	              </tr>
 	            </thead>
 	            <tbody id='detailPage'>
@@ -14,10 +14,10 @@
 	          </table>
 		</div>
 	</body>
-	<script type="text/javascript" >
+	<script type="text/javascript" th:inline="javascript">
 		$(function(){
 			$.ajax({
-				url:'./object/${functionId}/${objId}',
+				url:'./object/'+[[${functionId}]]+'/'+[[${objId}]],
 				type:'GET',
 				success:function(data,status){
 					var result = jQuery.parseJSON(data);

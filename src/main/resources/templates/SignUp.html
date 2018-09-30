@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+<html>
+<head>
+	<div th:replace="common/header::html"></div>
+	<link href="../../static/webresources/css/bootstrap.min.css" rel="stylesheet" type="text/css" th:href="@{/webresources/css/bootstrap.min.css}">
+    <link href="../../static/webresources/projectResources/css/carousel.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/carousel.css}">
+	<link href="../../static/webresources/projectResources/css/signin.css" rel="stylesheet" type="text/css" th:href="@{/webresources/projectResources/css/signin.css}">
+
+</head>
+<body>
+	<div class="container">
+      <form class="form-signin" action="/signUp" method="post">
+        <h2 class="form-signin-heading" th:text="#{signinpage.signup}">Sign Up</h2>
+        <label for="inputEmail" class="sr-only" th:text="#{user.email}"></label>
+        <input type="email" id="inputUserNM" name="inputUserNM" class="form-control" required="true" autofocus="true"
+        	th:attr="placeholder=#{user.email.placeHolder}"/>
+        <label for="inputPassword" class="sr-only" th:text="#{user.password}"></label>
+        <input type="password" id="inputPwd" name="inputPwd" class="form-control" th:attr="placeholder=#{user.password.placeHolder}" required="true"/>
+        <label for="aliasNm" class="sr-only" th:text="#{user.aliasNm}"></label>
+        <input type="input" id="aliasNm" name="aliasNm" class="form-control" th:attr="placeholder=#{user.aliasNm.placeHolder}">
+        <label for="gender" class="sr-only" th:text="#{user.gender}"></label>
+        <select class="form-control" id="gender" name="gender">
+		  <option selected th:text="#{common.selectOption}"></option>
+		  <option value="Male" th:text="#{user.gender.male}"></option>
+		  <option value="Female" th:text="#{user.gender.female}"></option>
+		</select>
+		<br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{signinpage.signup}">Sign Up</button>
+      </form>
+    </div>
+</body>
+</html>

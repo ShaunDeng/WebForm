@@ -20,4 +20,8 @@ public final class YgdrasilConst {
 	
 	public static String CUSTOMER_DOWNLOAD_TMP_FOLDER = "/staticResources/customerResources/tmp/";
 	
+	public static String PWD_PLACEHOLDER = "\u0F16";
+	
+	public static String PWD_PLACEHOLDER_STRING = "\u0F16\u0F16\u0F16\u0F16\u0F16\u0F16\u0F16\u0F16";
+	
 }

@@ -50,8 +50,11 @@ public class SystemLogService extends BaseService{
 				if(obj instanceof BaseEntity){
 					BaseEntity outputEntity = (BaseEntity)outputEntities.get(i);
 					content = JsonUtil.toJsonString(outputEntity);
+					if(content.length() > 2000){
+						content = content.substring(0, 2000);
+					}
 					sysLog.setTargetId(outputEntity.getId());
-					sysLog.setOptFlag(outputEntity.getOptFlag());
+					sysLog.setOptFlag(outputEntity.isOptFlag());
 					sysLog.setContent(content);
 					
 				} else {
