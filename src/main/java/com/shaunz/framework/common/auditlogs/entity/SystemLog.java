@@ -4,6 +4,11 @@ import java.util.Date;
 
 import com.shaunz.framework.core.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SystemLog extends BaseEntity{
     private String userId;
 
@@ -16,54 +21,11 @@ public class SystemLog extends BaseEntity{
     private Date optTime;
 
     private String content;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    public String getFunctionId() {
-        return functionId;
-    }
-
-    public void setFunctionId(String functionId) {
-        this.functionId = functionId == null ? null : functionId.trim();
-    }
-
-    public String getTargetId() {
-        return targetId;
-    }
-
-    public void setTargetId(String targetId) {
-        this.targetId = targetId == null ? null : targetId.trim();
-    }
-
-    public String getOptType() {
-        return optType;
-    }
-
-    public void setOptType(String optType) {
-        this.optType = optType == null ? null : optType.trim();
-    }
-
-    public Date getOptTime() {
-        return optTime;
-    }
-
-    public void setOptTime(Date optTime) {
-        this.optTime = optTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+    
+    private String operatorAliasNm;
+    
+    private String functionNm;
+    
     
 	@Override
 	public Object clone() throws CloneNotSupportedException {

@@ -1,13 +1,13 @@
-<%@ include file="../common/common.jsp"%>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header"><spring:message code="user.grant.title"/> ${user.aliasNm}(${user.id})</h2>
+  		<h2 class="sub-header" th:inline="text">[[#{user.grant.title}]]: <a href="#" id="userDetail">[[${user.aliasNm}]]</a></h2>
 		<form id="roleGrantForm">
 			<div class="form-group row">
-		    <label for="name" class="col-sm-2 col-form-label"><spring:message code="user.grant.roleIds"/></label>
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{user.grant.roleIds}"></label>
 		    <div class="input-group col-sm-6">
-		    	<input type="text" class="form-control" id="roleIds" name="roleIds" value="${selectedRoleIds}"/>
-		    	<input type="hidden" name="id" value="${user.id}"/>
+		    	<input type="text" class="form-control" id="roleIds" name="roleIds" th:value="${selectedRoleIds}" readonly="true"/>
+		    	<input type="hidden" name="id" th:value="${user.id}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -16,22 +16,21 @@
 		      
 		      <div class="row">
 			    <div class="col-sm-3 col-sm-offset-5">
-			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black"> <spring:message code="common.submit"/></button>
-		  			<button id="setting" type="button" class="btn btn-primary glyphicon glyphicon-repeat"> <spring:message code="common.setting"/></button>
-		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt"> <spring:message code="common.goBack"/></button>
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:text="' ' + #{common.submit}"></button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:text="' ' + #{common.goBack}"></button>
 			    </div>
 			</div>
 		</form>
         <br/>
         <div class="table-responsive">
-			<h3 class="sub-header"><spring:message code="user.grant.tableTitle"/></h3>
+			<h3 class="sub-header" th:text="#{user.grant.tableTitle}"></h3>
           <table id="table" class="table table-striped" style="width:100%">
           </table>
         </div>
   </body>
-  	<script type="text/javascript" >
+  	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#','<spring:message code="role.name"/>','<spring:message code="role.parentId"/>','<spring:message code="role.startTime"/>','<spring:message code="role.endTime"/>'],
+				header:['#','[[#{role.name}]]','[[#{role.parentId}]]','[[#{role.startTime}]]','[[#{role.endTime}]]'],
 				column:['id','name','parentId','startTime','endTime'],
 				url:'./role',
 				httpType:'GET',
@@ -46,6 +45,9 @@
 			$('#goBack').click(function(){
 	        	Shaunz.load('./mngpages/account_lst.html');
 	        });
+			$('#userDetail').click(function(){
+				Shaunz.showDetail('2',[[${user.id}]]);
+			});
 			
 			$('#roleGrantForm').validate({
 	        	debug: true,
@@ -57,7 +59,7 @@
 				},
 				messages: {
 					loginName: {
-						required: '<spring:message code="validation.user.grant.roleIds.required"/>'
+						required: [[#{validation.user.grant.roleIds.required}]]
 					}
 				},
 				errorPlacement: function(error, element) {

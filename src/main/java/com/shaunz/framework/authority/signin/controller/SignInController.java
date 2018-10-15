@@ -1,5 +1,7 @@
 package com.shaunz.framework.authority.signin.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.shiro.SecurityUtils;
@@ -30,6 +32,15 @@ import com.shaunz.webform.web.home.entity.HomePage;
 
 @Controller
 public class SignInController extends BaseController{
+	private static List<String> avaliablePageLst;
+	static{
+		avaliablePageLst = new ArrayList<String>();
+		avaliablePageLst.add("/index.html");
+		avaliablePageLst.add("/navBar.html");
+		avaliablePageLst.add("/dropDownLst.html");
+		avaliablePageLst.add("/marketInfo.html");
+		avaliablePageLst.add("/managePlant.html");
+	}
 	@Autowired
 	private UserService userService;
 	
@@ -176,6 +187,9 @@ public class SignInController extends BaseController{
 		String tmpUrl = url.toUpperCase();
 		if(tmpUrl.contains(projectNm)){
 			url = url.substring(tmpUrl.indexOf(projectNm) + projectNm.length());
+		}
+		if(!avaliablePageLst.contains(url)){
+			url = "/";
 		}
 		return url;
 	}

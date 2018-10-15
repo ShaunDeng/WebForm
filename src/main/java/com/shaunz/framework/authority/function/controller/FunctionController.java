@@ -38,10 +38,10 @@ public class FunctionController extends BaseController{
 		return convertToJsonString(treeMenu);
 	}
 	
-	@RequestMapping(value="/object/{functionId:[\\d]+}/{objId:[\\d]+}",method=RequestMethod.GET)
+	@RequestMapping(value="/object/{functionId:[\\d]+}/{objId}",method=RequestMethod.GET)
 	@ResponseBody
-	public String findObjBy(@PathVariable("functionId")long functionId, @PathVariable("objId")long objId){
-		Map<String, Object> obj = functionService.findObjectDetailBy(""+functionId, ""+objId);
+	public String findObjBy(@PathVariable("functionId")long functionId, @PathVariable("objId")String objId){
+		Map<String, Object> obj = functionService.findObjectDetailBy(""+functionId, objId);
 		return convertToJsonString(obj);
 	}
 	

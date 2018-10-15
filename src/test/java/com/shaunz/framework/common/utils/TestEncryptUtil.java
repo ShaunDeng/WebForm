@@ -13,7 +13,7 @@ public class TestEncryptUtil {
 	
 	@Test
 	public void decryptString() {
-		System.out.println(EncryptUtil.decryptString("admin"));
+		System.out.println(EncryptUtil.decryptString("ULoQAVLX2jJOb5EezLr0EA=="));
 		System.out.println("\u0F16");
 	}
 

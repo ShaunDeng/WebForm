@@ -7,7 +7,7 @@
 		    <label for="loginName" class="col-sm-2 col-form-label" th:text="#{user.userNm}"></label>
 		    <div class="input-group col-sm-6">
 		    	<input type="text" class="form-control" id="loginName" name="loginName" readOnly="true" th:attr="placeholder=#{user.userNm.placeHolder}" th:value="${user.loginName}"/>
-		    	<input type="hidden" name="id" value="${user.id}"/>
+		    	<input type="hidden" name="id" th:value="${user.id}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>

@@ -16,7 +16,6 @@ import com.shaunz.framework.authority.role.entity.Role;
 import com.shaunz.framework.authority.role.service.RoleService;
 import com.shaunz.framework.authority.user.entity.User;
 import com.shaunz.framework.authority.user.service.UserService;
-import com.shaunz.framework.common.utils.EncryptUtil;
 import com.shaunz.framework.common.utils.IArrayListUtil;
 import com.shaunz.framework.core.YgdrasilConst;
 import com.shaunz.framework.web.base.BaseController;
@@ -64,6 +63,7 @@ public class ManagePlantController extends BaseController{
 	public ModelAndView accountEditPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.selectByPrimaryKey(id);
+		user.setId(user.getId());
 		user.dateConverter();
 		user.setPassword(YgdrasilConst.PWD_PLACEHOLDER_STRING);
 		result.put("user", user);
@@ -75,7 +75,6 @@ public class ManagePlantController extends BaseController{
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.selectByPrimaryKey(userId);
 		user.dateConverter();
-		result.put("user", user);
 		List<Role> grantedRoles = roleService.getRolesByUsrId(user.getId());
 		String grantedRolesString = "";
 		if(!IArrayListUtil.isBlankList(grantedRoles)){
@@ -87,6 +86,7 @@ public class ManagePlantController extends BaseController{
 				}
 			}
 		}
+		result.put("user", user);
 		result.put("selectedRoleIds", grantedRolesString);
 		return new ModelAndView("mngpages/account_grant", result);
 	}

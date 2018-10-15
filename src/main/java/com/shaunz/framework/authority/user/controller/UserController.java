@@ -55,6 +55,7 @@ public class UserController extends BaseController{
 		} else {
 			result = userService.queryAll();
 		}
+		//result.stream().forEach(usr -> usr.setId(EncryptUtil.encryptString(usr.getId())));
 		return convertToJsonString(result);
 	}
 	
