@@ -3,12 +3,12 @@ jQuery.i18n.properties({
 	    name:'messages', 
 	    path:'/webresources/i18n/', 
 	    mode:'both',
-	  	async: false,
+	  	async: true,
 	  	callback: function() {
 	  		console.log('Loaded Language: ' + jQuery.i18n.browserLang());
 	  	}
 });
-var tableIconBtn = {
+Shaunz.tableIconBtn = {
 		edit:'glyphicon glyphicon-edit text-success',
 		detail:'glyphicon glyphicon-zoom-in text-info',
 		delt:'glyphicon glyphicon-remove text-danger',
@@ -47,8 +47,8 @@ Shaunz.generateTable = function(param){
 		headerHtml += param.header[i];
 		headerHtml += '</th>';
 	}
-	if(param.needOpration){
-		headerHtml += '<th>Oprations</th>';
+	if(param.operations){
+		headerHtml += '<th>'+jQuery.i18n.prop('frontPage.Oprations')+'</th>';
 	}
 	headerHtml += "</tr></thead>";
 	$.ajax({
@@ -64,29 +64,35 @@ Shaunz.generateTable = function(param){
 					bodyHtml += '<td></td>';
 				}
 				for(j=0;j<param.column.length;j++){
-					var tdContent = '-';
+					var tdContextData = '-';
 					if(objs[i][param.column[j]]){
-						tdContent = objs[i][param.column[j]];
+						tdContextData = objs[i][param.column[j]];
 						if(param.translate){
 							if(param.translate.includes(param.column[j])){
-								tdContent = jQuery.i18n.prop('frontPage.'+param.column[j]+'.'+tdContent);
+								tdContextData = jQuery.i18n.prop('frontPage.'+param.column[j]+'.'+tdContextData);
 							}
+						}
+					}
+					var tdContent = tdContextData;
+					if(param.hyperlinks){
+						if(param.hyperlinks[param.column[j]]){
+							var hyperlinkId = "hyperlink_"+i+"_"+param.column[j];
+							tdContent = "<a id="+hyperlinkId+" href=\"#\">"+tdContextData+"</a>";
 						}
 					}
 					bodyHtml = bodyHtml+"<td>"+tdContent+"</td>"; 
 				}
-				if(param.needOpration){
+				if(param.operations){
 					bodyHtml += '<td>';
-					var operations = param.operations;
-					var methods = param.methods;
 					bodyHtml += '<div class="row">';
-					for(k=0;k<operations.length;k++){
-						var operationBtnId = 'tableRow_'+objs[i].id+'_'+operations[k];
-						bodyHtml += '<div id="'+operationBtnId+'" class="col-md-1"><span class="';
-						bodyHtml += tableIconBtn[operations[k]];
-						bodyHtml += '" data-toggle="tooltip" data-placement="bottom" title="'+jQuery.i18n.prop('frontPage.'+operations[k])+'"></span></div> &nbsp';
-						
-					}
+					$.each(param.operations,function(key,val){
+						if(key != 'delt' || objs[i].id > 100){
+							var operationBtnId = 'tableRow_'+objs[i].id+'_'+key;
+							bodyHtml += '<div id="'+operationBtnId+'" class="col-md-1"><span class="';
+							bodyHtml += Shaunz.tableIconBtn[key];
+							bodyHtml += '" data-toggle="tooltip" data-placement="bottom" title="'+jQuery.i18n.prop('frontPage.'+key)+'"></span></div> &nbsp';
+						}
+					});
 					bodyHtml += '</div>';
 					bodyHtml += '</td>';
 				}
@@ -110,7 +116,6 @@ Shaunz.generateTable = function(param){
 			        select: {
 			            style: selectStyle
 			        },
-			        order: [[ 1, 'asc' ]],
 			        drawCallback: function(){
 			        	if(param.relatedInput){
 			        		var tableAPI = this.api();
@@ -147,18 +152,29 @@ Shaunz.generateTable = function(param){
 		            }
 		        } );
 			} else {
-				$('#'+param.target).DataTable();
+				$('#'+param.target).DataTable({"aaSorting": []});
 			}
 			
-			if(param.needOpration){
+			if(param.operations || param.hyperlinks){
 				for(i=0;i<objs.length;i++){
-					var methods = param.methods;
-					for(k=0;k<methods.length;k++){
-						var operationBtnId = 'tableRow_'+objs[i].id+'_'+operations[k];
-						$('#'+param.target).on('click','#'+operationBtnId,objs[i],methods[k]);
+					if(param.operations){
+						$.each(param.operations,function(key,val){
+							if(key != 'delt' || objs[i].id > 100){
+								var operationBtnId = 'tableRow_'+objs[i].id+'_'+key;
+								$('#'+param.target).on('click','#'+operationBtnId,objs[i],val);
+							}
+						});
+					}
+					if(param.hyperlinks){
+						$.each(param.hyperlinks,function(key,val){
+							var hyperlinkId = "hyperlink_"+i+"_"+key;
+							$('#'+param.target).on('click','#'+hyperlinkId,objs[i],val);
+						});
 					}
 				}
 			}
+			
+			
 		},
 		error: function(e){
 			console.log(e);

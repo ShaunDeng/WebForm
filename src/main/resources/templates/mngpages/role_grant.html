@@ -1,16 +1,16 @@
-<%@ include file="../common/common.jsp"%>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header"><spring:message code="user.grant.title"/> ${role.name}(${role.id})</h2>
+  		<h2 class="sub-header" th:inline="text">#{user.grant.title}: ${role.name}</h2>
   		<div class="row">
   		<form id="roleGrantForm">
-  			<input type="hidden" value="${role.id}" name="id"/>
+  			<input type="hidden" th:value="${role.id}" name="id"/>
   			<div class="row">
 			    <div class="col-sm-12">
-			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black"> <spring:message code="common.submit"/></button>
-			    	<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat"> <spring:message code="common.reset"/></button>
-		  			<button id="setting" type="button" class="btn btn-primary glyphicon glyphicon-repeat"> <spring:message code="common.setting"/></button>
-		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt"> <spring:message code="common.goBack"/></button>
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> #{common.submit}</button>
+			    	<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> #{common.reset}</button>
+		  			<button id="setting" type="button" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> #{common.setting}</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> #{common.goBack}</button>
 			    </div>
 			</div>
 			<br/>
@@ -28,7 +28,7 @@
 	            <tbody>
 	            <c:forEach items = "${functions}" var = "function">
 		            <tr>
-		            	<td>${function.id}</td>
+		            	<td th:text="${function.id}"></td>
 		            	<c:choose>
 		            		<c:when test="${not empty function.grantedAuthority}">
 		            			<td><input type="checkbox" id="${function.id}" name="${function.id}" value="${function.id}" checked/>${function.name}</td>

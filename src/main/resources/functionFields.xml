@@ -39,4 +39,12 @@
 			id name url type parentId
 		</tableColumn>
 	</function>	
+	<function id="3" title="role">
+		<tableHeader>
+			# name parentId startTime endTime
+		</tableHeader>
+		<tableColumn>
+			id name parentId startTime endTime
+		</tableColumn>
+	</function>	
 </functions>

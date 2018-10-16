@@ -10,7 +10,7 @@ public final class YgdrasilConst {
 
 	public static String XSS_REDIRECT_URL="index";
 	
-	public static String DATE_FORMART = "yyyy-MM-dd HH:mm";
+	public static String DATE_FORMART = "yyyy-MM-dd HH:mm:ss";
 	
 	public static String SUCCESS = "Success";
 	

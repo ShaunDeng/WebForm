@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{role.title}"></a></h2>
+       	<form id="roleAddForm">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{role.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{role.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="parentId" class="col-sm-2 col-form-label" th:text="#{role.parentId}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="parentId" name="parentId" aria-describedby="emailHelp" th:attr="placeholder=#{role.parentId.placeHolder}" readonly="true">
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		  	<label for="startTime" class="col-sm-2 col-form-label" th:text="#{role.startTime}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerFrom'>
+               	<input type="text" class="form-control" id="startTime" name="startTime" th:attr="placeholder=#{role.startTime.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+          	<label for="endTime" class="col-sm-2 col-form-label" th:text="#{role.endTime}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerTo'>
+               	<input type="text" class="form-control" id="endTime" name="endTime" th:attr="placeholder=#{role.endTime.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	var inputIdFunctionMap = {
+  			'parentId':'3'
+  	}
+  	$(function () {
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var fromDatePicker = $('#datetimepickerFrom').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        var toDatePicker = $('#datetimepickerTo').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        Shaunz.preparePopChooseBox(inputIdFunctionMap);
+        
+        $('#roleAddForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+        		name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				parentId: {
+					required: true,
+					maxlength: 100
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.role.name.required}]],
+					minlength: [[#{validation.role.name.minlength(${2})}]],
+					maxlength: [[#{validation.role.name.minlength(${100})}]]
+				},
+				parentId: {
+					required: [[#{validation.role.parentId.required}]],
+					maxlength: [[#{validation.role.parentId.maxlength(${100})}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./role','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./mngpages/role_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./mngpages/role_lst.html');
+        });
+    });
+	</script>
+</html>

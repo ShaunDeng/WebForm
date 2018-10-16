@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
-  		<h2 class="sub-header" th:text="#{function.title}">Function</h2>
+  		<h2 class="sub-header" th:text="#{functions.title}">Function</h2>
         <br/>
         <div class="table-responsive">
           <table id="table" class="table table-striped" style="width:100%">
@@ -10,16 +10,16 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#',[[#{function.name}]],[[#{function.parentId}]],[[#{function.URL}]],[[#{function.tableNm}]]],
+				header:['#',[[#{functions.name}]],[[#{functions.parentId}]],[[#{functions.URL}]],[[#{functions.tableNm}]]],
 				column:['id','name','parentId','url','tableNm'],
 				url:'./function',
 				httpType:'GET',
 				target:'table',
-				needOpration:true,
-				operations:['detail'],
-				methods:[function(obj){
-					Shaunz.showDetail('13',obj.data.id);
-				}]
+				operations:{
+					'detail':function(obj){
+						Shaunz.showDetail('13',obj.data.id);
+					}
+				}
 		};
 		$(function(){
 			Shaunz.generateTable(TableParam);

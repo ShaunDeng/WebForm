@@ -1,24 +1,38 @@
-<%@ include file="../common/common.jsp"%>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
-  		<h2 class="sub-header">System Log</h2>
+  		<h2 class="sub-header" th:text="#{syslog.title}">System Log</h2>
         <br/>
         <div class="table-responsive">
           <table id="table" class="table table-striped" style="width:100%">
           </table>
         </div>
   </body>
-  	<script type="text/javascript" >
+  	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#','Operator','Function','Opration Type','Time'],
-				column:['id','userId','functionId','optType','optTime'],
+				header:['#',[[#{syslog.operator}]],[[#{syslog.function}]],[[#{syslog.oprationType}]],[[#{syslog.time}]]],
+				column:['id','operatorAliasNm','functionNm','optType','optTime'],
 				url:'./sysLog',
 				httpType:'GET',
 				target:'table',
-				needOpration:false
+				hyperlinks:{
+					'operatorAliasNm':function(obj){
+						Shaunz.showDetail('2',obj.data.userId);
+					},
+					'functionNm':function(obj){
+						Shaunz.showDetail('13',obj.data.functionId);
+					}
+				},
+				operations:{
+					'detail':function(obj){
+						Shaunz.showDetail('12',obj.data.id);
+					}
+				}
 		};
+		
 		$(function(){
 			Shaunz.generateTable(TableParam);
 		});
+		
 	</script>
 </html>

@@ -229,7 +229,7 @@
     select 
     <include refid="Base_Column_List" />
     from tb_user
-    where close_flg = 'N'
+    where close_flg = 'N' order by CAST(id AS integer) asc
   </select>   
   <select id="getUsrRoleMapBy" parameterType="java.lang.String" resultType="java.util.Map">
   	select * from tb_user_role where user_id = #{userId}

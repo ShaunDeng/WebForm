@@ -19,23 +19,23 @@
 				url:'./user',
 				httpType:'GET',
 				target:'table',
-				needOpration:true,
-				operations:['detail','edit','grant','delt'],
-				methods:[function(obj){
-					Shaunz.showDetail('2',obj.data.id);
-				},
-				function(obj){
-					Shaunz.load("./mngpages/account_edit.html?id="+obj.data.id);
-				},
-				function(obj){
-					Shaunz.load("./mngpages/account_grant.html?userId="+obj.data.id);
-				},
-				function(obj){
-					Shaunz.deleteConfirmBox(obj.data.aliasNm,function () {
-		            	Shaunz.ajaxRequest(null,'./user/'+obj.data.id,'DELETE');
-						Shaunz.load("./mngpages/account_lst.html");
-		            },function(){});
-				}]
+				operations:{
+					'detail':function(obj){
+						Shaunz.showDetail('2',obj.data.id);
+					},
+					'edit':function(obj){
+						Shaunz.load("./mngpages/account_edit.html?id="+obj.data.id);
+					},
+					'grant':function(obj){
+						Shaunz.load("./mngpages/account_grant.html?userId="+obj.data.id);
+					},
+					'delt':function(obj){
+						Shaunz.deleteConfirmBox(obj.data.aliasNm,function () {
+			            	Shaunz.ajaxRequest(null,'./user/'+obj.data.id,'DELETE');
+							Shaunz.load("./mngpages/account_lst.html");
+			            },function(){});
+					}
+				}
 		};
 		$(function(){
 			Shaunz.generateTable(TableParam);

@@ -9,12 +9,11 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:[[${tableHeader}]],
-				column:[[${tableColumn}]],
-				url:'./choose/${functionId}',
+				header:eval([[${tableHeader}]]),
+				column:eval([[${tableColumn}]]),
+				url:'./choose/'+[[${functionId}]],
 				httpType:'GET',
 				target:'ChooseTable',
-				needOpration:false,
 				selectable:true,
 				multiselect:[[${multiselect}]],
 				relatedInput:'ChooseInput'
