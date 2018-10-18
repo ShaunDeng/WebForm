@@ -7,10 +7,11 @@
     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="close_flg" property="closeFlg" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="tb_nm" property="tableNm" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, parent_id, url, close_flg,tb_nm
+    id, name, parent_id, url, close_flg,icon,tb_nm
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

@@ -1,32 +1,36 @@
-<%@ include file="../common/common.jsp"%>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header"><spring:message code="role.title"/></h2>
+  		<h2 class="sub-header" th:text="#{role.title}"></h2>
        	<form id="roleEditForm">
        	  <div class="form-group row">
-		    <label for="name" class="col-sm-2 col-form-label"><spring:message code="role.name"/></label>
-		    <div class="input-group col-sm-6">
-		    	<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="role.name.placeHolder"/>" value="${role.name}"/>
-		    	<input type="hidden" name="id" value="${role.id}"/>
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{role.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{role.name.placeHolder}" th:value="${role.name}"/>
+		    	<input type="hidden" name="id" th:value="${role.id}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
 		    </div>
 		  </div>
 		  <div class="form-group row">
-		    <label for="parentId" class="col-sm-2 col-form-label"><spring:message code="role.parentId"/></label>
+		    <label for="parentId" class="col-sm-2 col-form-label" th:text="#{role.parentId}"></label>
 		    <div class="input-group col-sm-6">
-		    	<input type="text" class="form-control" id="parentId" name="parentId" aria-describedby="emailHelp" placeholder="<spring:message code="role.parentId.placeHolder"/>" value="${role.parentId}"/>
+		    	<input type="text" class="form-control" id="parentId" name="parentId" aria-describedby="emailHelp" th:attr="placeholder=#{role.parentId.placeHolder}" th:value="${role.parentId}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
 		    </div>
 		  </div>
 		  <div class="form-group row">
-		  	<label for="startTime" class="col-sm-2 col-form-label"><spring:message code="role.startTime"/></label>
+		  	<label for="startTime" class="col-sm-2 col-form-label" th:text="#{role.startTime}"></label>
             <div class='input-group date col-sm-6' id='datetimepickerFrom'>
-               	<input type="text" class="form-control" id="startTime" name="startTime" placeholder="<spring:message code="role.startTime.placeHolder"/>" value="${role.startTimeString}"/>
+               	<input type="text" class="form-control" id="startTime" name="startTime" th:attr="placeholder=#{role.startTime.placeHolder}" th:value="${role.startTimeString}"/>
                 <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
@@ -35,10 +39,11 @@
 		    </div>
           </div>
           <div class="form-group row">
-          	<label for="endTime" class="col-sm-2 col-form-label"><spring:message code="role.endTime"/></label>
+          	<label for="endTime" class="col-sm-2 col-form-label" th:text="#{role.endTime}"></label>
             <div class='input-group date col-sm-6' id='datetimepickerTo'>
-               	<input type="text" class="form-control" id="endTime" name="endTime" placeholder="<spring:message code="role.endTime.placeHolder"/>" value="${role.endTimeString}"/>
+               	<input type="text" class="form-control" id="endTime" name="endTime" th:attr="placeholder=#{role.endTime.placeHolder}" th:value="${role.endTimeString}"/>
                 <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
@@ -48,26 +53,37 @@
           </div>
           <div class="row">
 			    <div class="col-sm-3 col-sm-offset-5">
-			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black"> <spring:message code="common.submit"/></button>
-		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat"> <spring:message code="common.reset"/></button>
-		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt"> <spring:message code="common.goBack"/></button>
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
 			    </div>
 			</div>
 		</form>
         <br/>
   </body>
-  	<script type="text/javascript" >
+  	<script type="text/javascript" th:inline="javascript">
+  	var inputIdFunctionMap = {
+  			'parentId':'3'
+  	}
   	$(function () {
-        $('#datetimepickerFrom').datetimepicker();
-        $('#datetimepickerTo').datetimepicker({
-            useCurrent: false 
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var fromDatePicker = $('#datetimepickerFrom').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
         });
-        $("#datetimepickerFrom").on("dp.change", function (e) {
-            $('#datetimepickerTo').data("DateTimePicker").minDate(e.date);
+        var toDatePicker = $('#datetimepickerTo').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
         });
-        $("#datetimepickerTo").on("dp.change", function (e) {
-            $('#datetimepickerFrom').data("DateTimePicker").maxDate(e.date);
-        });
+        Shaunz.preparePopChooseBox(inputIdFunctionMap);
         
         $('#roleEditForm').validate({
         	debug: true,
@@ -77,13 +93,21 @@
 					required: true,
 					minlength: 2,
 					maxlength: 100
+				},
+				parentId: {
+					required: true,
+					maxlength: 100
 				}
 			},
 			messages: {
-				loginName: {
-					required: '<spring:message code="validation.role.name.required"/>',
-					minlength: '<spring:message code="validation.role.name.minlength" arguments="2;" htmlEscape="false" argumentSeparator=";"/>',
-					maxlength: '<spring:message code="validation.role.name.minlength" arguments="100;" htmlEscape="false" argumentSeparator=";"/>'
+				name: {
+					required: [[#{validation.role.name.required}]],
+					minlength: [[#{validation.role.name.minlength(${2})}]],
+					maxlength: [[#{validation.role.name.minlength(${100})}]]
+				},
+				parentId: {
+					required: [[#{validation.role.parentId.required}]],
+					maxlength: [[#{validation.role.parentId.maxlength(${100})}]]
 				}
 			},
 			errorPlacement: function(error, element) {

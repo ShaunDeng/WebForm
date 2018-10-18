@@ -18,22 +18,16 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="#" th:href="${application.homePageObject.homeUrl}" text:inline="text"><i class="glyphicon glyphicon-home"></i> [[${application.homePageObject.projectNm}]]</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a id="Dashboard" href="#">Dashboard</a></li>
-            <li><a href="#">Help</a></li>
-            <li></i><a id="userInterface" href="#"><i class="glyphicon glyphicon-user"></i> </a></li>
+            <li><a id="Dashboard" href="#"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
+            <li></i><a id="userInterface" href="#"><i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-chevron-down"></i></a></li>
           </ul>
           <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" placeholder="Search..." readonly="readonly">
           </form>
         </div>
       </div>
@@ -53,11 +47,18 @@
         			<div id="userName" class="gi-2x"></div>
         		</div>
         		<br/>
+        		<br/>
+        		<br/>
         		<div class="row">
         			<div class="row">
-	        			<a href="#"><i class="glyphicon glyphicon-file"></i> Profile</a>
+	        			<a href="#"><i class="glyphicon glyphicon-edit"></i> Profile</a>
 				        <br/>
-				        <a href="#"><i class="glyphicon glyphicon-file"></i> Change Password</a>
+				        <br/>
+				        <a href="#"><i class="glyphicon glyphicon-lock"></i> Change Password</a>
+				        <br/>
+				        <br/>
+				        <br/>
+				        <br/>
 				        <br/>
 				        <br/>
 	        			<a href="./signout"><i class="glyphicon glyphicon-log-out"></i> SignOut</a>
@@ -82,14 +83,15 @@
 				   }
 				});
 			Shaunz.load('./mngpages/dashboard.html');
-			
+			var usrNm;
 			$.ajax({
 				url:'./crrentUser',
 				type:'GET',
 				success: function(data,status) {
 					   var result = jQuery.parseJSON(data);
-					   $('#userInterface').append(result.aliasNm);
-					   $('#userName').append(result.aliasNm);
+					   usrNm = result.aliasNm;
+					   $('#userInterface').html('<i class="glyphicon glyphicon-user"></i> '+usrNm+' <i class="glyphicon glyphicon-chevron-down"></i>');
+					   $('#userName').append(usrNm);
 			   	},
 			    error: function(e) {
 				   console.log(e);
@@ -99,8 +101,10 @@
 			$('#userInterface').click(function(){
 				if($('#userSettings').is(":visible")){
 					$('#userSettings').fadeOut("slow");
+					$('#userInterface').html('<i class="glyphicon glyphicon-user"></i> '+usrNm+' <i class="glyphicon glyphicon-chevron-down"></i>');
 				} else {
 					$('#userSettings').fadeIn("slow");
+					$('#userInterface').html('<i class="glyphicon glyphicon-user"></i> '+usrNm+' <i class="glyphicon glyphicon-chevron-up"></i>');
 				}
 			});
 			$('#Dashboard').click(function(){

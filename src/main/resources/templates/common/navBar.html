@@ -27,9 +27,9 @@
 				</li>
 	        </th:block>
 	        </ul>
-	        <ul class="nav navbar-nav navbar-right">
+	        <ul class="nav navbar-nav navbar-right" id="signInURL">
 	          <li>
-	          	<a id="signInURL" th:href="${application.homePageObject.signInURL}" href="#"></a>
+	          	<a th:href="${application.homePageObject.signInURL}" href="#"></a>
 	          </li>
 	        </ul>
 	      </div>
@@ -38,6 +38,7 @@
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 		var signInText = [[#{homepage.signin}]];
+		var signInURL = [[${application.homePageObject.signInURL}]];
 		$('document').ready(function(){
 			$.ajax({
 				url: './signCheck',
@@ -45,17 +46,28 @@
 				success: function(data,status){
 					if(data != null){
 						var user = jQuery.parseJSON(data);
-						if(user.aliasNm != null)
-							$('#signInURL').html('<i class="glyphicon glyphicon-user"></i> '+user.aliasNm);
-						else
-							$('#signInURL').html('<i class="glyphicon glyphicon-log-in"></i> ' + signInText);
+						if(user.aliasNm != null){
+							var htmlContext = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"href="#"><i class="glyphicon glyphicon-user"></i> '
+							+user.aliasNm+' <span class="caret"></span></a>';
+							htmlContext+='<ul class="dropdown-menu">';
+							htmlContext+='<li>';
+							htmlContext+='<a href="'+signInURL+'" ><i class="glyphicon glyphicon-user"></i> '+[[#{homepage.gotoMngmtPlt}]]+'</a>';
+							htmlContext+='<a href="./signout" ><i class="glyphicon glyphicon-log-out"></i> '+[[#{homepage.signout}]]+'</a>';
+							htmlContext+='</li>';
+							htmlContext+='</ul>';
+							htmlContext+='</li>';
+							$('#signInURL').html(htmlContext);
+						}
+						else{
+							$('#signInURL').html('<li><a href="'+signInURL+'"><i class="glyphicon glyphicon-log-in"></i> '+signInText+'</a></li>');
+						}
 					} else {
-						$('#signInURL').html(signInText);
+						$('#signInURL').html('<li><a href="'+signInURL+'"><i class="glyphicon glyphicon-log-in"></i> '+signInText+'</a></li>');
 					}
 					
 				},
 				error: function(){
-					$('#signInURL').html(signInText);
+					$('#signInURL').html('<li><a href="'+signInURL+'"><i class="glyphicon glyphicon-log-in"></i> '+signInText+'</a></li>');
 				}
 			});
 		});

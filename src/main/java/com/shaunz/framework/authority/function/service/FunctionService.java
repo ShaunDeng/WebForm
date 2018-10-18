@@ -32,6 +32,11 @@ public class FunctionService extends BaseService{
 		if(treeMenu.isValidTree()){
 			treeMenu.setShowBorder(false);
 			treeMenu.setBackColor("#F5F5F5");
+			treeMenu.setCollapseIcon("glyphicon");
+			treeMenu.setExpandIcon("glyphicon");
+			treeMenu.setSelectedBackColor("#4D4D4D");
+			treeMenu.setOnhoverColor("#909090");
+			treeMenu.setShowBorder(false);
 			return treeMenu;
 		}
 		return null;

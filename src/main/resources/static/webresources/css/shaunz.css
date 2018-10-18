@@ -19,12 +19,12 @@
 	order:1;
 	flex:0 0 auto;
 	height:calc(100% - 50px);
-	padding:24px;
+	padding:30px;
 	display:flex;
 	opacity:1;
 	visibility:visible;
 	z-index:104;
-	background:#101010;
+	background:#222222;
 	color:#f2f2f2;
 }
 .settings > div > div > div > a{
@@ -111,7 +111,7 @@
 }
 .treeview span.icon {
  width:12px;
- margin-right:5px
+ margin-right:12px
 }
 .treeview .node-disabled {
  color:silver;
@@ -120,7 +120,4 @@
 .node-TreeMenu {
  background-color:#F5F5F5;
  border:none;
-}
-.node-TreeMenu:not(.node-disabled):hover {
- background-color:#F5F5F5;
 }

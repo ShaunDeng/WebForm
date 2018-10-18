@@ -391,6 +391,7 @@ public class TreeMenu implements Serializable{
 			treeNode.setId(function.getId());
 			treeNode.setName(function.getName());
 			treeNode.setUrl(function.getUrl());
+			treeNode.setIcon(function.getIcon());
 			treeNode.init();
 			nodeLst.add(treeNode);
 		}

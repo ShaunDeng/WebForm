@@ -10,8 +10,9 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#',[[#{syslog.operator}]],[[#{syslog.function}]],[[#{syslog.oprationType}]],[[#{syslog.time}]]],
-				column:['id','operatorAliasNm','functionNm','optType','optTime'],
+				header:['#',[[#{syslog.operator}]],[[#{syslog.function}]],[[#{syslog.oprationType}]],[[#{syslog.targetId]],[[#{syslog.time}]]],
+				column:['id','operatorAliasNm','functionNm','optType','targetId','optTime'],
+				translate:['optType'],
 				url:'./sysLog',
 				httpType:'GET',
 				target:'table',

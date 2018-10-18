@@ -133,7 +133,7 @@ public class ShaunzRealm extends AuthorizingRealm{
 		if(user.getEndTime() == null)
 			user.setEndTime(currentDate);
 		return !((currentDate.after(user.getStartTime()) || currentDate.equals(user.getStartTime())) 
-				&& (currentDate.before(user.getEndTime()) ||  currentDate.equals(user.getStartTime())));
+				&& (currentDate.before(user.getEndTime()) ||  currentDate.equals(user.getEndTime())));
 	}
 	
 	private boolean isExcessiveAttemptsTime(User user){

@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header" th:inline="text">#{user.grant.title}: ${role.name}</h2>
+  		<h2 class="sub-header" th:inline="text">[[#{user.grant.title}]]: [[${role.name}]]</h2>
   		<div class="row">
   		<form id="roleGrantForm">
   			<input type="hidden" th:value="${role.id}" name="id"/>
   			<div class="row">
 			    <div class="col-sm-12">
-			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> #{common.submit}</button>
-			    	<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> #{common.reset}</button>
-		  			<button id="setting" type="button" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> #{common.setting}</button>
-		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> #{common.goBack}</button>
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+			    	<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="setting" type="button" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.setting}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
 			    </div>
 			</div>
 			<br/>
@@ -26,47 +26,25 @@
 	              </tr>
 	            </thead>
 	            <tbody>
-	            <c:forEach items = "${functions}" var = "function">
+	            <th:block th:each="function : ${functions}">
 		            <tr>
 		            	<td th:text="${function.id}"></td>
-		            	<c:choose>
-		            		<c:when test="${not empty function.grantedAuthority}">
-		            			<td><input type="checkbox" id="${function.id}" name="${function.id}" value="${function.id}" checked/>${function.name}</td>
-		            			<c:set var = "add" value = "false"/>
-		            			<c:set var = "delete" value = "false"/>
-		            			<c:set var = "update" value = "false"/>
-		            			<c:set var = "query" value = "false"/>
-		            			<c:forEach items = "${function.grantedAuthority}" var = "authority">
-		            				<c:choose>
-		            					<c:when test="${authority eq '4'}">
-		            						<c:set var = "query" value = "true"/>
-		            					</c:when>
-		            					<c:when test="${authority eq '1'}">
-		            						<c:set var = "add" value = "true"/>
-		            					</c:when>
-		            					<c:when test="${authority eq '3'}">
-		            						<c:set var = "update" value = "true"/>
-		            					</c:when>
-		            					<c:when test="${authority eq '2'}">
-		            						<c:set var = "delete" value = "true"/>
-		            					</c:when>
-		            				</c:choose>
-		            			</c:forEach>
-		            			<td><input type="checkbox" id="${function.id}_query" name="${function.id}_query" value="${function.id}_query" <c:if test="${query eq true}">checked</c:if>/></td>
-				            	<td><input type="checkbox" id="${function.id}_add" name="${function.id}_add" value="${function.id}_add" <c:if test="${add eq true}">checked</c:if>/></td>
-				            	<td><input type="checkbox" id="${function.id}_update" name="${function.id}_update" value="${function.id}_update" <c:if test="${update eq true}">checked</c:if>/></td>
-				            	<td><input type="checkbox" id="${function.id}_delete" name="${function.id}_delete" value="${function.id}_delete" <c:if test="${delete eq true}">checked</c:if>/></td>
-		            		</c:when>
-		            		<c:otherwise>
-		            			<td><input type="checkbox" id="${function.id}" name="${function.id}" value="${function.id}"/>${function.name}</td>
-				            	<td><input type="checkbox" id="${function.id}_query" name="${function.id}_query" value="${function.id}_query" /></td>
-				            	<td><input type="checkbox" id="${function.id}_add" name="${function.id}_add" value="${function.id}_add" /></td>
-				            	<td><input type="checkbox" id="${function.id}_update" name="${function.id}_update" value="${function.id}_update" /></td>
-				            	<td><input type="checkbox" id="${function.id}_delete" name="${function.id}_delete" value="${function.id}_delete" /></td>
-		            		</c:otherwise>
-		            	</c:choose>
+	            		<th:block th:if="${function.grantedAuthority != null}">
+	            			<td><input type="checkbox" th:id="${function.id}" th:name="${function.id}" th:value="${function.id}" checked="checked" th:text="${function.name}"/></td>
+            				<td><input type="checkbox" th:id="${function.id+'_query'}" th:name="${function.id+'_query'}" th:value="${function.id+'_query'}" th:checked="${#lists.contains(function.grantedAuthority,'4')}"/></td>
+		            		<td><input type="checkbox" th:id="${function.id+'_add'}" th:name="${function.id+'_add'}" th:value="${function.id+'_add'}" th:checked="${#lists.contains(function.grantedAuthority,'1')}"/></td>
+		            		<td><input type="checkbox" th:id="${function.id+'_update'}" th:name="${function.id+'_update'}" th:value="${function.id+'_update'}" th:checked="${#lists.contains(function.grantedAuthority,'3')}"/></td>
+		            		<td><input type="checkbox" th:id="${function.id+'_delete'}" th:name="${function.id+'_delete'}" th:value="${function.id+'_delete'}" th:checked="${#lists.contains(function.grantedAuthority,'2')}"/></td>
+            			</th:block>
+	            		<th:block th:unless="${function.grantedAuthority !=null}">
+	            			<td><input type="checkbox" th:id="${function.id}" th:name="${function.id}" th:value="${function.id}" th:text="${function.name}"/></td>
+			            	<td><input type="checkbox" th:id="${function.id+'_query'}" th:name="${function.id+'_query'}" th:value="${function.id+'_query'}" /></td>
+			            	<td><input type="checkbox" th:id="${function.id+'_add'}" th:name="${function.id+'_add'}" th:value="${function.id+'_add'}" /></td>
+			            	<td><input type="checkbox" th:id="${function.id+'_update'}" th:name="${function.id+'_update'}" th:value="${function.id+'_update'}" /></td>
+			            	<td><input type="checkbox" th:id="${function.id+'_delete'}" th:name="${function.id+'_delete'}" th:value="${function.id+'_delete'}" /></td>
+	            		</th:block>
 	            	</tr>
-	            </c:forEach>
+	            </th:block>
 	            </tbody>
 	          </table>
           </form>
@@ -120,7 +98,6 @@
 				    error.addClass("text-danger").insertAfter(nextElement);
 				},
 				submitHandler:function(form){
-					console.log($(form).serialize());
 					Shaunz.submitForm(form,'./role/grant','POST');
 				}
 	  		});

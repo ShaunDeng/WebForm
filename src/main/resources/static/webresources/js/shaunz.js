@@ -54,6 +54,7 @@ Shaunz.generateTable = function(param){
 	$.ajax({
 		url:param.url,
 		type: param.gethttpType,
+		data: param.data,
 		async: false,
 		success: function(data,status){
 			var objs = jQuery.parseJSON(data);
@@ -195,7 +196,6 @@ Shaunz.alert = function(type,title,info){
 		if(lastDiv.height() > 100){
 			height = lastDiv.height();
 		}
-		console.log('top:' + position.top)
 		newDiv.css({top: position.top-(height+2)});
 		newDiv.insertAfter(lastDiv);
 	} else {
