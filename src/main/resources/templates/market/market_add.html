@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{market.title}"></a></h2>
+       	<form id="marketAddForm" enctype="multipart/form-data">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{market.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{market.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{market.header}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="header" name="header" th:attr="placeholder=#{market.header.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{market.image}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="imgId" name="imgId" th:attr="placeholder=#{market.image.placeHolder}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{market.button}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="buttonId" name="buttonId" th:attr="placeholder=#{market.button.placeHolder}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{market.author}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="authorId" name="authorId" th:attr="placeholder=#{market.author.placeHolder}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  
+  		  <div class="form-group row">
+		  	<label for="postTime" class="col-sm-2 col-form-label" th:text="#{market.postTime}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerPostTime'>
+               	<input type="text" class="form-control" id="postTime" name="postTime" th:attr="placeholder=#{market.header.placeHolder}"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+		  <br/>
+		  <div class="form-group row">
+		  	<label for="cssClass" class="col-sm-2 col-form-label" th:text="#{market.content}"></label>
+		  	<div class="nopadding col-sm-6">
+	  		    <textarea id="content" name ="content" class="form-control" rows="10" th:attr="placeholder=#{market.content.placeHolder}"></textarea>
+		  	</div>
+		  	<div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	var inputIdFunctionMap = {
+  			'buttonId':'9',
+  			'imgId':'10',
+  			'authorId':'14'
+  	}
+  	
+  	$(function () {
+  		Shaunz.preparePopChooseBox(inputIdFunctionMap);
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var fromDatePicker = $('#datetimepickerPostTime').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd hh:ii:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+  		$('#content').wysihtml5();
+        $('#marketAddForm').validate({
+        	debug: true,
+        	onfocusout: false,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				header: {
+					required: true
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.button.name.required}]],
+					minlength: [[#{validation.button.name.minlength(${2})}]],
+					maxlength: [[#{validation.button.name.minlength(${100})}]]
+				},
+				header: [[#{validation.button.cssclass.required}]]
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./market','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./market/market_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./market/market_lst.html');
+        });
+    });
+	</script>
+</html>

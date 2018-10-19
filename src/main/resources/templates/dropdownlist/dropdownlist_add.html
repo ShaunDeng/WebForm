@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{dropdownlist.title}"></a></h2>
+       	<form id="dropDownListAddForm" enctype="multipart/form-data">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{dropdownlist.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{dropdownlist.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{dropdownlist.url}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="url" name="url" th:attr="placeholder=#{dropdownlist.url.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{dropdownlist.type}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" name="type" id="typeNormal" value="normal" checked/>
+				  <label class="form-check-label" for="typeNormal" th:text="#{dropdownlist.type.normal}"></label>
+				  <input class="form-check-input" type="radio" name="type" id="typeSeparator" value="separator"/>
+				  <label class="form-check-label" for="typeSeparator" th:text="#{dropdownlist.type.separator}"></label>
+				  <input class="form-check-input" type="radio" name="type" id="typeDropdown_header" value="dropdown_header"/>
+				  <label class="form-check-label" for="typeDropdown_header" th:text="#{dropdownlist.type.dropdown_header}"></label>
+				</div>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{dropdownlist.parentId}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="parentId" name="parentId" th:attr="placeholder=#{dropdownlist.parentId.placeHolder}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	var inputIdFunctionMap = {
+  			'parentId':'5'
+  	}
+  	
+  	$(function () {
+  		Shaunz.preparePopChooseBox(inputIdFunctionMap);
+        $('#dropDownListAddForm').validate({
+        	debug: true,
+        	onfocusout: false,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				url: {
+					required: true
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.button.name.required}]],
+					minlength: [[#{validation.button.name.minlength(${2})}]],
+					maxlength: [[#{validation.button.name.minlength(${100})}]]
+				},
+				url: [[#{validation.button.cssclass.required}]]
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./dropdownlist','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./dropdownlist/dropdownlist_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./mngpages/account_lst.html');
+        });
+    });
+	</script>
+</html>

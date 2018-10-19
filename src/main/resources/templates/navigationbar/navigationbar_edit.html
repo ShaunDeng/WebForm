@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{navigationbar.title}"></a></h2>
+       	<form id="navigationBarEditForm">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{navigationbar.name}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{navigationbar.name.placeHolder}" th:value="${navigationBar.name}"/>
+		    	<input type="hidden" name="id" th:value="${navigationBar.id}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+  		  <div class="form-group row">
+		    <label for="type" class="col-sm-2 col-form-label" th:text="#{navigationbar.type}"></label>
+		    <div class="input-group col-sm-6">
+		    	<select class="form-control" id="type" name="type">
+				  <option th:selected="${navigationBar.type eq 'normal'}" th:value="normal" th:text="#{navigationbar.type.normal}"></option>
+				  <option th:selected="${navigationBar.type eq 'dropdown'}" th:value="dropdown" th:text="navigationbar.type.dropdown"></option>
+				</select>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="url" class="col-sm-2 col-form-label" th:text="#{navigationbar.url}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="url" name="url" th:attr="placeholder=#{navigationbar.url.placeHolder}" th:value="${navigationBar.url}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="form-group row">
+		    <label for="activeN" class="col-sm-2 col-form-label" th:text="#{navigationbar.active}"></label>
+		    <div class="input-group col-sm-6">
+		    	<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" name="active" id="activeY" value="active" th:checked="${navigationBar.active eq 'active'}"/>
+				  <label class="form-check-label" for="lockUpY" th:text="#{common.yes}"></label>
+				  <input class="form-check-input" type="radio" name="active" id="activeN" value="inactive" th:checked="${navigationBar.active eq 'inactive'}"/>
+				  <label class="form-check-label" for="lockUpN" th:text="#{common.no}"></label>
+				</div>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+        $('#navigationBarEditForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				type: {
+					required: true
+				},
+				url: {
+					required: true
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.navigationbar.name.required}]],
+					minlength: [[#{validation.navigationbar.name.minlength(${2})}]],
+					maxlength: [[#{validation.navigationbar.name.minlength(${100})}]]
+				},
+				type: [[#{validation.navigationbar.type.required}]],
+				url: {
+					required: [[#{validation.navigationbar.url.required}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./navigationbar','PUT');
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./navigationbar/navigationbar_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./navigationbar/navigationbar_lst.html');
+        });
+    });
+	</script>
+</html>

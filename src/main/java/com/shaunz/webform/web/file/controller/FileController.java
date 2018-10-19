@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -40,11 +39,10 @@ public class FileController extends BaseController{
 	@ResponseBody
 	public String imageLst(String path){
 		List<Map<String, String>> imageLst = null;
-		String webRootPath = ((HttpServletRequest)request).getServletContext().getRealPath("/");
-		String imageDir = webRootPath+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
 		File imageFolder = new File(imageDir);
 		if(imageFolder.exists()){
-			imageLst = listFilesForFolder(imageFolder,webRootPath,path);
+			imageLst = listFilesForFolder(imageFolder,YgdrasilConst.WEB_UPLOAD_PATH,path);
 		}
 		return convertToJsonString(imageLst);
 	}
@@ -59,8 +57,7 @@ public class FileController extends BaseController{
 				if(IStringUtil.isBlank(fileNm)){
 					fileNm = "img_"+new Date().getTime();
 				}
-				String webRootDir = ((HttpServletRequest)request).getServletContext().getRealPath("/");
-				imageUrl = MultipartFileUtil.uploadFileReNmIfExist(file, webRootDir, YgdrasilConst.CUSTOMER_IMAGE_PATH,fileNm);
+				imageUrl = MultipartFileUtil.uploadFileReNmIfExist(file, YgdrasilConst.WEB_UPLOAD_PATH, YgdrasilConst.CUSTOMER_IMAGE_PATH,fileNm);
 				if(IStringUtil.notBlank(imageUrl)){
 					flag = true;
 				}
@@ -75,9 +72,7 @@ public class FileController extends BaseController{
 	@RequestMapping(value = "/file/image", method = RequestMethod.GET)
     @ResponseBody
     public void downloadImage(String fileNms,String path,HttpServletResponse response) throws Exception {
-		String webRootPath = ((HttpServletRequest)request).getServletContext().getRealPath("/");
-		webRootPath = webRootPath.substring(0,webRootPath.length()-1);
-		String imageDir = webRootPath+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
 		String[] fileNmArr = fileNms.split(",");
 		List<File> images = new ArrayList<File>();
 		if(!IArrayListUtil.isBlankArray(fileNmArr)){
@@ -91,14 +86,14 @@ public class FileController extends BaseController{
 		}
 		
 		try {
-			File outputFile = new File(webRootPath+YgdrasilConst.CUSTOMER_DOWNLOAD_TMP_FOLDER+"download_"+new Date().getTime()+".zip");
+			File outputFile = new File(YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_DOWNLOAD_TMP_FOLDER+"download_"+new Date().getTime()+".zip");
 			if(images.size() ==1){
 				outputFile = images.get(0);
 			} else if(images.size() > 1){
 				outputFile.createNewFile();
 				MultipartFileUtil.zipFile(images, outputFile);
-				MultipartFileUtil.download(request, response, outputFile);
 			}
+			MultipartFileUtil.download(request, response, outputFile);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
@@ -109,9 +104,7 @@ public class FileController extends BaseController{
 	public String deleteImage(String fileNms,String path,Locale locale){
 		boolean flag = false;
 		List<String> failedLst = new ArrayList<String>();
-		String webRootPath = ((HttpServletRequest)request).getServletContext().getRealPath("/");
-		webRootPath = webRootPath.substring(0,webRootPath.length()-1);
-		String imageDir = webRootPath+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
 		String[] fileNmArr = fileNms.split(",");
 		if(!IArrayListUtil.isBlankArray(fileNmArr)){
 			for (int i = 0; i < fileNmArr.length; i++) {
@@ -138,9 +131,7 @@ public class FileController extends BaseController{
 	@ResponseBody
 	public String createFolder(String name,String path,Locale locale){
 		boolean flag = false;
-		String webRootPath = ((HttpServletRequest)request).getServletContext().getRealPath("/");
-		webRootPath = webRootPath.substring(0,webRootPath.length()-1);
-		String imageDir = webRootPath+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
 		File folder = new File(imageDir+name);
 		if(folder.isDirectory()&&!folder.exists()){
 			flag = folder.mkdir();

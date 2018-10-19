@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{image.title}"></a></h2>
+       	<form id="imageEditForm" enctype="multipart/form-data">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{image.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{image.name.placeHolder}" th:value="${image.name}"/>
+		    	<input type="hidden" name="id" th:value = "${image.id}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:text="#{image.cssclass}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="cssClass" name="cssClass" th:attr="placeholder=#{image.cssclass.placeHolder}" th:value="${image.cssClass}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		  	<label class="col-sm-2 col-form-label" th:text="#{image.image}"></label>
+            <div class="nopadding col-sm-2"> 
+                <div class="img-picker">
+                </div>
+            </div>
+            <div class="col-sm-8">
+		    	<span></span>
+		    </div>
+          </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:text="#{common.submit}"> </button>
+		  			<button id="reset" type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:text="#{common.reset}"> </button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:text="#{common.goBack}"> </button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+  		var srcUrl = '${image.url}';
+  		if(srcUrl.indexOf("/") == 0){
+  			srcUrl = '${ctxPath}' +srcUrl;
+  		}
+  		$('.img-picker').imageUploader({name: 'file',preview: true,src:srcUrl});
+        $('#imageEditForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				cssClass: {
+					required: true
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.image.name.required}]],
+					minlength: [[#{validation.image.name.minlength(${2})}]],
+					maxlength: [[#{validation.image.name.minlength(${100})}]]
+				},
+				cssClass: [[#{validation.image.cssclass.required}]]
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.SubmitMultipartForm(form,'./image/edition','POST');
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./image/image_lst.html');
+        });
+        $('#reset').click(function(){
+        	$('.img-picker').imagePicker({name: 'file',preview: true,src:srcUrl});
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./image/image_lst.html');
+        });
+    });
+	</script>
+</html>

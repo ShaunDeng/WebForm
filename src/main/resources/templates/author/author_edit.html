@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{author.title}"></a></h2>
+       	<form id="authorEditForm">
+       	  <div class="form-group row">
+		    <label for="loginName" class="col-sm-2 col-form-label" th:text="#{author.userNm}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{author.userNm.placeHolder}" th:value="${author.name}"/>
+		    	<input type="hidden" name="id" th:value="${author.id}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="email" class="col-sm-2 col-form-label" th:text="#{author.email}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" th:attr="placeholder=#{author.email.placeHolder}" th:value="${author.email}"/>
+		    	<small id="emailHelp" class="form-text text-muted" th:text="#{author.email.help}"></small>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="password" class="col-sm-2 col-form-label" th:text="#{author.password}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="password" class="form-control" id="pwd" name="pwd" th:attr="placeholder=#{author.password.placeHolder}" th:value="${author.pwd}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="aliasName" class="col-sm-2 col-form-label" th:text="#{author.aliasNm}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="aliasNm" name="aliasNm" th:attr="placeholder=#{author.aliasNm.placeHolder}" th:value="${author.aliasNm}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{author.gender}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<select class="form-control" id="gender" name="gender">
+				  <option th:selected="${author.gender eq 'male'}" value="Male" th:text="#{author.gender.male}"></option>
+				  <option th:selected="${author.gender eq 'Female'}" value="Female" th:text="#{author.gender.female}"></option>
+				</select>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="form-group row">
+		    <label for="lockUpN" class="col-sm-2 col-form-label" th:text="#{author.lockUp}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<div class="form-check form-check-inline">
+				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpY" value="Y" th:checked="${author.lockUp eq 'Y'}"/>
+				  <label class="form-check-label" for="lockUpY" th:text="#{common.yes}"></label>
+				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpN" value="N" th:checked="${author.lockUp eq 'N'}"/>
+				  <label class="form-check-label" for="lockUpN" th:text="#{common.no}"></label>
+				</div>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+        $('#authorEditForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+        		name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				pwd: {
+					required: true,
+					minlength: 8,
+					maxlength: 100
+				},
+				aliasNm: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.author.name.required}]],
+					minlength: [[#{validation.author.name.minlength(${2})}]],
+					maxlength: [[#{validation.author.name.minlength(${100})}]]
+				},
+				email: [[#{validation.author.email}]],
+				pwd: {
+					required: [[#{validation.author.password.required}]],
+					minlength: [[#{validation.author.password.minlength(${2})}]],
+					maxlength: [[#{validation.author.password.minlength(${100})}]]
+				},
+				aliasNm: {
+					required: [[#{validation.author.aliasNm.required}]],
+					minlength: [[#{validation.author.aliasNm.minlength(${2})}]],
+					maxlength: [[#{validation.author.aliasNm.minlength(${100})}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./author','PUT');
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./author/author_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./author/author_lst.html');
+        });
+    });
+	</script>
+</html>

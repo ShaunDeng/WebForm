@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{image.title}"></a></h2>
+       	<form id="imageAddForm" enctype="multipart/form-data">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{image.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{image.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cssClass" class="col-sm-2 col-form-label" th:inline="text">
+		    	[[#{image.cssclass}]]
+		    	<span class="glyphicon glyphicon-question-sign" 
+		    		data-toggle="tooltip" data-placement="right" title="CSS type: img-circle is used for market and first-slide,second-slide,third-slide,forth-slide are used for carousel. You also can use other css type you know in bootstrap"></span>
+		    </label>
+		    <div class="nopadding col-sm-6" >
+		    	<input type="text" class="form-control" id="cssClass" name="cssClass" th:attr="placeholder=#{image.cssclass.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		  	<label class="col-sm-2 col-form-label" th:text="#{image.image}"></label>
+            <div class="nopadding col-sm-2"> 
+                <div class="img-picker"></div>
+            </div>
+            <div class="col-sm-8">
+		    	<span></span>
+		    </div>
+          </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+  		$('.img-picker').imageUploader({name: 'file'});
+        $('#imageAddForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				cssClass: {
+					required: true
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.image.name.required}]],
+					minlength: [[#{validation.image.name.minlength(${2})}]],
+					maxlength: [[#{validation.image.name.minlength(${100})}]]
+				},
+				cssClass: [[#{validation.image.cssclass.required}]]
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.SubmitMultipartForm(form,'./image','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./image/image_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./image/image_lst.html');
+        });
+    });
+	</script>
+</html>

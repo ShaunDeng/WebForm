@@ -112,6 +112,7 @@ public class ShiroConfiguration {
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/webresources/**", "anon");
 		filterChainDefinitionMap.put("/customerResources/**", "anon");
+		filterChainDefinitionMap.put("/images/**", "anon");
 		filterChainDefinitionMap.put("/signIn.html", "anon");
 		filterChainDefinitionMap.put("/signUp.html", "anon");
 		filterChainDefinitionMap.put("/signCheck", "anon");

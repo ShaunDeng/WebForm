@@ -16,9 +16,11 @@ public final class YgdrasilConst {
 	
 	public static String FAILED = "Failed";
 	
-	public static String CUSTOMER_IMAGE_PATH = "/staticResources/customerResources/images/";
+	public static String WEB_UPLOAD_PATH = "/home/shaun/uploaded/";
 	
-	public static String CUSTOMER_DOWNLOAD_TMP_FOLDER = "/staticResources/customerResources/tmp/";
+	public static String CUSTOMER_IMAGE_PATH = "images/";
+	
+	public static String CUSTOMER_DOWNLOAD_TMP_FOLDER = "tmp/";
 	
 	public static String PWD_PLACEHOLDER = "\u0F16";
 	

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<div th:replace="common/header::html"></div>
+	    <link href="${projectResPath}/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body >
+		<div class="page-header">
+        <h1 th:inline="text">ERROR No.[[${ReferenceNo}]]</h1>
+      </div>
+      <div class="well">
+        <p th:text="${exception}"></p>
+      </div>
+</html>
