@@ -27,7 +27,6 @@ public class WebFormSpringBootApplication extends SpringBootServletInitializer{
 	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		// TODO Auto-generated method stub
 		super.onStartup(servletContext);
 		
 		//This will set to use COOKIE only
