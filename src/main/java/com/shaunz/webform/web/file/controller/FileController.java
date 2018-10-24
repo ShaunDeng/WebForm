@@ -26,11 +26,15 @@ import com.shaunz.framework.web.base.BaseController;
 @Controller
 public class FileController extends BaseController{
 	private static String[] IMAGE_SUBFIX = {"png","bmp","dib","jpg","jpeg","jpe","jfif","gif","notify()","tiff"};
-	@RequestMapping(value="/file/image_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/file/image_lst.html")
 	public String imagePage(){
 		return "file/image_lst";
 	}
-	@RequestMapping(value="/file/document_lst.html",method=RequestMethod.GET)
+	@RequestMapping(value="/file/image_upload.html")
+	public String imageUploadPage(){
+		return "file/image_upload";
+	}
+	@RequestMapping(value="/file/document_lst.html")
 	public String docPage(){
 		return "file/document_lst";
 	}

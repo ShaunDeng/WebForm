@@ -1,34 +1,22 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<style>
-.drop_zone {
-  text-align: center;
-  border: dashed 3px #C1C3C5;
-  width:  500px;
-  height: 120px;
-}
-.drop_zone p h2 {
-  color: #999;
-}
-</style>
 <body>
 	<p><h2><code><span id="currentPath"></span></code></h2></p>
 	<div class="row">
 		<div class="col-sm-12">
-			<p><b>Note:</b>If you want display below images in your blog, you should use full path to indicate the physical location of them.<br/>
-			<b>When you use mouse left click one image, it's full path will be copied to your clipboard automatically.</b>
+			<p th:inline="text"><b>[[#{common.note}]]:</b>[[#{file.image.title.msg1}]]<br/>
+			<b>[[#{file.image.title.msg2}]]</b>
 			</p>
 			<br/>
-			<form id="imageAddForm" enctype="multipart/form-data">
+			<form id="imageForm" enctype="multipart/form-data">
 				<div class="form-group">
-					<input type="file" name="file" />
 					<input id="fileNms" type="hidden" name="fileNms" value=""/>
 					<input id="path" type="hidden" name="path" value=""/>
-					<button id="upload" type="button" class="btn btn-primary glyphicon glyphicon-upload"> Upload</button>
-					<button id="download" type="button" class="btn btn-primary glyphicon glyphicon-download"> Download</button>
-					<button id="delete" type="button" class="btn btn-primary glyphicon glyphicon glyphicon-remove"> Delete</button>
-					<button id="newFolder" type="button" class="btn btn-primary glyphicon glyphicon glyphicon-folder-open"> New Folder</button>
-					<button id="refreshPage" type="button" class="btn btn-primary glyphicon glyphicon glyphicon glyphicon-repeat"> Refresh Page</button>
+					<button id="upload" type="button" class="btn btn-primary glyphicon glyphicon-upload" th:inline="text"> [[#{file.image.upload}]]</button>
+					<button id="download" type="button" class="btn btn-primary glyphicon glyphicon-download" th:inline="text"> [[#{file.image.download}]]</button>
+					<button id="delete" type="button" class="btn btn-primary glyphicon glyphicon glyphicon-remove" th:inline="text"> [[#{file.image.delete}]]</button>
+					<button id="newFolder" type="button" class="btn btn-primary glyphicon glyphicon glyphicon-folder-open" th:inline="text"> [[#{file.image.newFolder}]]</button>
+					<button id="refreshPage" type="button" class="btn btn-primary glyphicon glyphicon glyphicon glyphicon-repeat" th:inline="text"> [[#{file.image.refreshPage}]]</button>
 				</div>
 			</form>
 		</div>
@@ -37,7 +25,7 @@
 		<select class="image-picker" show-labels multiple></select>
 	</div>
 	
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 var refreshPage = function(){
 	var path = $('#path').val();
 	$.ajax({
@@ -94,14 +82,41 @@ var copyToClipboard = function(text) {
 $(function(){
 	refreshPage();
 	$('#upload').click(function(){
-		if($('input[type="file"]')[0].files[0]){
-			var fileNm = $('input[type="file"]')[0].files[0].name;
-			$('#fileNm').val(fileNm);
-			var formData = new FormData($('#imageAddForm')[0]);
-			upload(formData);
-		} else {
-			Shaunz.showWarning('Validation','Please choose a file first!');
-		}
+		BootstrapDialog.show({
+	    	title: jQuery.i18n.prop('file.image.upload'),
+			size: BootstrapDialog.SIZE_WIDE,
+			closable: false,
+			type: BootstrapDialog.TYPE_PRIMARY,
+	    	message: function(dialog) {
+	            var $message = $('<div></div>');
+	            var pageToLoad = dialog.getData('pageToLoad');
+	            $message.load(pageToLoad);
+	            return $message;
+	        },
+	        data: {
+	            'pageToLoad': './file/image_upload.html'
+	        },
+	        buttons: [{
+	            label: jQuery.i18n.prop('frontPage.submit'),
+	            title: jQuery.i18n.prop('frontPage.closeDialog'),
+	            action: function(dialogItself){
+	            	if($('input[type="file"]')[0].files[0]){
+	        			var formData = new FormData($('#imageAddForm')[0]);
+	        			upload(formData);
+	        			dialogItself.close();
+	        		} else {
+	        			Shaunz.showWarning('Validation','Please choose a file first!');
+	        		}
+	            }
+        	},
+	        {
+	            label: jQuery.i18n.prop('frontPage.cancel'),
+	            title: jQuery.i18n.prop('frontPage.closeDialog'),
+	            action: function(dialogItself){
+	                dialogItself.close();
+	            }
+	        }]
+	    });
 		
 	});
 	$('#download').click(function(){

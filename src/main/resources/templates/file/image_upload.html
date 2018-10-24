@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div class="row">
+		<div class="col-sm-12">
+			<form id="imageAddForm" enctype="multipart/form-data">
+				<div class="form-group row">
+				  	<label class="col-sm-2 col-form-label" th:text="#{file.image.image}"></label>
+		            <div class="nopadding col-sm-2"> 
+		                <div class="img-picker"></div>
+		            </div>
+		            <div class="col-sm-8">
+				    	<span></span>
+				    </div>
+	            </div>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript" th:inline="javascript">
+$(function(){
+	$('.img-picker').imageUploader({name: 'file'});
+});
+</script>
+</body>
+</html>
