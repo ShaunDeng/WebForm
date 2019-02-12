@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Deal with the date class
@@ -13,8 +14,8 @@ import org.apache.log4j.Logger;
  * @author Shaun
  * @version 1.0
  */
+@Slf4j
 public class DateUtil {
-	private final static Logger logger = Logger.getLogger(DateUtil.class);
 	private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
 
 	private final static SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,7 +80,7 @@ public class DateUtil {
 		try {
 			return dateFormat.parse(date);
 		} catch (ParseException e) {
-			logger.error("[DateUtil#fomatDate] "+e.getMessage());
+			log.error("[DateUtil#fomatDate] "+e.getMessage());
 			return null;
 		}
 	}
@@ -112,7 +113,7 @@ public class DateUtil {
 			beginDate = dateFormat.parse(beginDateStr);
 			endDate= dateFormat.parse(endDateStr);
 		} catch (ParseException e) {
-			logger.error("[DateUtil#getDaySub] "+e.getMessage());
+			log.error("[DateUtil#getDaySub] "+e.getMessage());
 			day = -1;
 		}
 	    day=(endDate.getTime()-beginDate.getTime())/(24*60*60*1000);

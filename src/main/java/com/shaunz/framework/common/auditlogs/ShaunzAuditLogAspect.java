@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -32,10 +31,12 @@ import com.shaunz.framework.authority.user.entity.User;
 import com.shaunz.framework.common.auditlogs.service.SystemLogService;
 import com.shaunz.framework.common.utils.IArrayListUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Aspect
 @Component
+@Slf4j
 public class ShaunzAuditLogAspect {
-	private static Logger logger = Logger.getLogger(ShaunzAuditLogAspect.class);
 	@Autowired
 	SystemLogService systemLogService;
 	
@@ -55,7 +56,7 @@ public class ShaunzAuditLogAspect {
 			operator = (User)getHttpServletRequest().getSession().getAttribute("user");
 			inputParams = getArgs(joinPoint);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 		
 	}
@@ -74,12 +75,12 @@ public class ShaunzAuditLogAspect {
 			boolean logFlag = systemLogService.log(shaunzAuditLog.optType(), shaunzAuditLog.functionId(), 
 					inputEntities, outputEntities, operator);
 			if(!logFlag){
-				logger.warn("Loging failed: OptType:" + shaunzAuditLog.optType() 
+				log.warn("Loging failed: OptType:" + shaunzAuditLog.optType() 
 				+" FunctionId:" + shaunzAuditLog.functionId() 
 				+" OperatorId:" + operator.getId());
 			}
 		} catch (Exception e) {
-			logger.error(e.getClass() + e.getMessage());
+			log.error(e.getClass() + e.getMessage());
 		} finally {
 			shaunzAuditLog = null;
 			subject = null;
@@ -105,7 +106,7 @@ public class ShaunzAuditLogAspect {
 		try {
 			shaunzAuditLog = (ShaunzAuditLog)getAspectAnnotation(joinPoint,ShaunzAuditLog.class);
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
+			log.error(ex.getMessage());
 		}
 		
 	}

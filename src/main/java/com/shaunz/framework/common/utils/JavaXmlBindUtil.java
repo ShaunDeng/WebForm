@@ -13,10 +13,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JavaXmlBindUtil {
-	private static Logger logger = Logger.getLogger(JavaXmlBindUtil.class);
 	/**
 	 * POJO to XML OutputStream
 	 * @method marShallBean
@@ -31,7 +31,7 @@ public class JavaXmlBindUtil {
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.marshal(target, os);
 		} catch (JAXBException e) {
-			logger.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
+			log.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
 			throw e;
 		}
 	}
@@ -53,14 +53,14 @@ public class JavaXmlBindUtil {
 			JavaXmlBindUtil.marShallBean(target, os,clazz);
 			str = os.toString();
 		} catch (JAXBException e) {
-			logger.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
+			log.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
 			throw e;
 		} finally {
 			if(os != null)
 				try {
 					os.close();
 				} catch (IOException e) {
-					logger.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
+					log.error("JavaXmlBindUtil#marShallBean"+e.getMessage());
 				}
 		}
 		return str;
@@ -81,7 +81,7 @@ public class JavaXmlBindUtil {
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			target = unmarshaller.unmarshal(is);
 		} catch (JAXBException e) {
-			logger.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
+			log.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
 			throw e;
 		}
 		return target;
@@ -106,14 +106,14 @@ public class JavaXmlBindUtil {
 			input = new ByteArrayInputStream(str.getBytes());
 			target = unMarShallXml(input, clazz);
 		} catch (JAXBException e) {
-			logger.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
+			log.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
 			throw e;
 		} finally {
 			if(input != null)
 				try {
 					input.close();
 				} catch (IOException e) {
-					logger.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
+					log.error("JavaXmlBindUtil#unMarShallXml"+e.getMessage());
 				}
 		}
 		return target;

@@ -15,7 +15,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 
@@ -24,10 +25,9 @@ import org.apache.log4j.Logger;
  * @author Shaun
  * @since 2016-07-01
  */
+@Slf4j
 public class EncryptUtil
 {
-	private static Logger logger = Logger.getLogger(EncryptUtil.class);	
-	
 	private static final String ALG_STRING="AES";
 	private static final String ALG_STRING_CIPHER="AES/CBC/PKCS5Padding";
 	private static final String ALG_STRING_MD="MD5";
@@ -225,7 +225,7 @@ public class EncryptUtil
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			logger.error("[EncryptUtil#md5sum] " + e.getMessage());
+			log.error("[EncryptUtil#md5sum] " + e.getMessage());
 		}
 		return null;
 	}
@@ -262,7 +262,7 @@ public class EncryptUtil
 		    dfilewriter.write(dstring);
 		    dfilewriter.close();
 		} catch(Exception e) {
-			logger.error("[EncryptUtil#encryptFile] " +efile.getName() , e);
+			log.error("[EncryptUtil#encryptFile] " +efile.getName() , e);
 			return false;
 		}
 		return true;
@@ -298,7 +298,7 @@ public class EncryptUtil
 		    dfilewriter.close();
 		}catch(Exception e)
 		{
-			logger.error("[EncryptUtil#decryptFile] " + dfile.getName() , e);
+			log.error("[EncryptUtil#decryptFile] " + dfile.getName() , e);
 			return false;
 		}
 		return true;	
@@ -332,7 +332,7 @@ public class EncryptUtil
 		    sfilereader.close();
 		    swriter.close();		    
 		} catch(Exception e) {
-			logger.error("[EncryptUtil#decryptFileToString] " + dfile.getName() , e);
+			log.error("[EncryptUtil#decryptFileToString] " + dfile.getName() , e);
 			return restr;
 		}
 		return restr;	
@@ -349,7 +349,7 @@ public class EncryptUtil
 	      }
 	      return sb.toString();
 	    } catch (NoSuchAlgorithmException e) {
-	    	logger.error("[EncryptUtil#getHash] " + source + ",hashType" , e);
+	    	log.error("[EncryptUtil#getHash] " + source + ",hashType" , e);
 	    }
 	    return null;
 	}
@@ -365,7 +365,7 @@ public class EncryptUtil
 	      }
 	      return sb.toString();
 	    } catch (NoSuchAlgorithmException e) {
-	    	logger.error(e.getMessage());
+	    	log.error(e.getMessage());
 	    }
 	    return null;
 	}
@@ -380,7 +380,7 @@ public class EncryptUtil
 	      }
 	      return sb.toString();
 	    } catch (NoSuchAlgorithmException e) {
-	    	logger.error(e.getMessage());
+	    	log.error(e.getMessage());
 	    }
 	    return null;
 	}

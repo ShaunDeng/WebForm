@@ -19,10 +19,11 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
-import org.apache.log4j.Logger;
 
 import com.shaunz.framework.common.utils.ReflectUtil;
 import com.shaunz.framework.web.page.Page;
+
+import lombok.extern.slf4j.Slf4j;
  
 /**
  *
@@ -38,8 +39,8 @@ import com.shaunz.framework.web.page.Page;
  */
 @Intercepts( {
        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class}) })
+@Slf4j
 public class PageInterceptor implements Interceptor {
-	private Logger logger = Logger.getLogger(PageInterceptor.class);
     private String DB_TYPE;//数据库类型，不同的数据库有不同的分页方法
    
     /**
@@ -201,7 +202,7 @@ public class PageInterceptor implements Interceptor {
               page.setTotalRecord(totalRecord);
            }
        } catch (SQLException e) {
-    	   logger.error("[PageInterceptor#setTotalRecord] " + e.getMessage());
+    	   log.error("[PageInterceptor#setTotalRecord] " + e.getMessage());
        } finally {
            try {
               if (rs != null)
@@ -209,7 +210,7 @@ public class PageInterceptor implements Interceptor {
                if (pstmt != null)
                   pstmt.close();
            } catch (SQLException e) {
-        	   logger.error("[PageInterceptor#setTotalRecord] " + e.getMessage());
+        	   log.error("[PageInterceptor#setTotalRecord] " + e.getMessage());
            }
        }
     }

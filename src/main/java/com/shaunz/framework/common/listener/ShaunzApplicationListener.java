@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -20,12 +19,15 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.shaunz.framework.common.source.service.SourceService;
+import com.shaunz.framework.common.utils.DateUtil;
 import com.shaunz.framework.common.utils.JavaXmlBindUtil;
 import com.shaunz.framework.jaxb.functionfield.FunctionFieldsXml;
 import com.shaunz.webform.web.common.HomePageGenerator;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ShaunzApplicationListener implements ApplicationListener<ApplicationEvent>{
-	private Logger logger = Logger.getLogger(ShaunzApplicationListener.class);
 	
 	@Resource
 	private HomePageGenerator homePageGenerator;
@@ -80,39 +82,39 @@ public class ShaunzApplicationListener implements ApplicationListener<Applicatio
 			    		FunctionFieldsXml functionFieldsXml =(FunctionFieldsXml) JavaXmlBindUtil.unMarShallXml(new FileInputStream(xml), FunctionFieldsXml.class);
 			    		functionFieldsXml.init();
 			    		servletContext.setAttribute("functionFieldsXml", functionFieldsXml);
-			    		logger.info("Set functionFieldsXml into Servlet Context success!");
+			    		log.info("Set functionFieldsXml into Servlet Context success!");
 					} catch (FileNotFoundException e1) {
-						logger.error(e1.getMessage());
+						log.error(e1.getMessage());
 					} catch (JAXBException e1) {
-						logger.error(e1.getMessage());
+						log.error(e1.getMessage());
 					} catch (Exception e1){
-						logger.error(e1.getMessage());
+						log.error(e1.getMessage());
 					}
 			    } else {
-			    	logger.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
+			    	log.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
 			    }
 			} catch (FileNotFoundException e2) {
-				logger.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
+				log.warn("Did'nt find functionFields.xml, that will make some functionality not work!");
 			}
 	    }
 	    
-	    logger.info("Application Refreshed...");
+	    log.info("Application Refreshed...");
 	}
 	
 	private void dapplicationStarted(ApplicationEvent event){
-		logger.info("Application Started...");
+		log.info("Application Started...");
 	}
 	
 	private void applicationStoped(ApplicationEvent event){
-		logger.info("Application Stoped...");
+		log.info("Application Stoped...");
 	}
 	
 	private void applicationClosed(ApplicationEvent event){
-		logger.info("Application Closed...");
+		log.info("Application Closed...");
 	}
 	
 	private void requestHandled(ApplicationEvent event){
-		logger.info("Request Handled...");
+		log.info("Request Handled...");
 	}
 
 }

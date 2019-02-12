@@ -2,7 +2,7 @@ package com.shaunz.framework.common.utils;
 
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
  * @author Shaun
  * @version 1.0
  */
+@Slf4j
 public class IPropertyUtil {
-    private static final Logger logger = Logger.getLogger(IPropertyUtil.class);
 	private Properties manager = null;
 
 	/**
@@ -25,7 +25,7 @@ public class IPropertyUtil {
 		try {
 			manager.load(getClass().getResourceAsStream(props));
 		} catch (Exception e) {
-			logger.error("[IPropertyUtil#IPropertyUtil]"+ e.getMessage());
+			log.error("[IPropertyUtil#IPropertyUtil]"+ e.getMessage());
 		}
 	}
     /**   

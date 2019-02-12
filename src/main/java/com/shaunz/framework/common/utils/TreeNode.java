@@ -2,16 +2,17 @@ package com.shaunz.framework.common.utils;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.io.Serializable;
 
 @Component
+@Slf4j
 public class TreeNode implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger.getLogger(TreeNode.class);
 	
 	protected String pid;
 	protected String id;
@@ -207,7 +208,7 @@ public class TreeNode implements Serializable {
 	public void traverse() {
 		if (id ==null || "".equals(id))
 			return;
-		logger.info(this.toString());
+		log.info(this.toString());
 		if (nodes == null || nodes.isEmpty())
 			return;
 		int childNumber = nodes.size();
