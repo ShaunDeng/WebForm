@@ -1,4 +1,4 @@
-package com.shaunz;
+package com.shaunz.configurations;
 
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;

@@ -1,4 +1,4 @@
-package com.shaunz;
+package com.shaunz.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
