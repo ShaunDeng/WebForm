@@ -139,4 +139,10 @@
       close_flg = #{closeFlg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_driver
+    where close_flg = 'N' order by CAST(id AS integer) asc
+  </select>
 </mapper>

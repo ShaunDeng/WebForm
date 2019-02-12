@@ -1,5 +1,7 @@
 package com.shaunz.transfersystem.web.driver.dao;
 
+import java.util.List;
+
 import com.shaunz.transfersystem.web.driver.entity.Driver;
 
 public interface DriverMapper {
@@ -14,4 +16,6 @@ public interface DriverMapper {
     int updateByPrimaryKeySelective(Driver record);
 
     int updateByPrimaryKey(Driver record);
+    
+    List<Driver> queryList();
 }

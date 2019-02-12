@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{driver.title}"></a></h2>
+       	<form id="addForm">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{driver.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{driver.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{driver.gender}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<select class="form-control" id="gender" name="gender">
+				  <option value="Male" th:text="#{driver.gender.male}"></option>
+				  <option value="Female" th:text="#{driver.gender.female}"></option>
+				</select>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+  		  <div class="form-group row">
+		  	<label for="dayOfBirth" class="col-sm-2 col-form-label" th:text="#{driver.dob}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerDob'>
+               	<input type="text" class="form-control" id="dayOfBirth" name="dayOfBirth" th:attr="placeholder=#{driver.dob.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+		    <label for="phoneNumber" class="col-sm-2 col-form-label" th:text="#{driver.phoneNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:attr="placeholder=#{driver.phoneNumber.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="idNumber" class="col-sm-2 col-form-label" th:text="#{driver.idNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="idNumber" name="idNumber" th:attr="placeholder=#{driver.idNumber.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="driveLicenseNumber" class="col-sm-2 col-form-label" th:text="#{driver.driveLicenseNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="driveLicenseNumber" name="driveLicenseNumber" th:attr="placeholder=#{driver.driveLicenseNumber.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="drivingYears" class="col-sm-2 col-form-label" th:text="#{driver.drivingYears}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="drivingYears" name="drivingYears" th:attr="placeholder=#{driver.drivingYears.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var dobDatePicker = $('#datetimepickerDob').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd 00:00:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        $('#addForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				pwd: {
+					required: true,
+					minlength: 8,
+					maxlength: 100
+				},
+				aliasNm: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.author.name.required}]],
+					minlength: [[#{validation.author.name.minlength(${2})}]],
+					maxlength: [[#{validation.author.name.minlength(${100})}]]
+				},
+				email: [[#{validation.author.email}]],
+				pwd: {
+					required: [[#{validation.author.password.required}]],
+					minlength: [[#{validation.author.password.minlength(${2})}]],
+					maxlength: [[#{validation.author.password.minlength(${100})}]]
+				},
+				aliasNm: {
+					required: [[#{validation.author.aliasNm.required}]],
+					minlength: [[#{validation.author.aliasNm.minlength(${2})}]],
+					maxlength: [[#{validation.author.aliasNm.minlength(${100})}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./driver','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./driver/driver_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./driver/driver_lst.html');
+        });
+    });
+	</script>
+</html>

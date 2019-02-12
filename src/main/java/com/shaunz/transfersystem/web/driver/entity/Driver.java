@@ -2,9 +2,9 @@ package com.shaunz.transfersystem.web.driver.entity;
 
 import java.util.Date;
 
-public class Driver {
-    private String id;
+import com.shaunz.framework.core.BaseEntity;
 
+public class Driver extends BaseEntity{
     private String name;
 
     private String gender;
