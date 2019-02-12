@@ -9,6 +9,7 @@ import com.shaunz.framework.common.sequence.dao.SequenceMapper;
 public class SequenceGenerator {
 	private static String MNGMT_SQ_NM = "mngmt_sq";
 	private static String LOG_SQ_NM = "log_sq";
+	private static String TRANSFER_SQ_NM = "transfer_sq";
 	@Autowired
 	private SequenceMapper sequenceMapper;
 	
@@ -22,5 +23,9 @@ public class SequenceGenerator {
 	
 	public int getnextLogSequenceNo(){
 		return getNextSequenceNo(LOG_SQ_NM);
+	}
+	
+	public int getNextTransferSequenceNo(){
+		return getNextSequenceNo(TRANSFER_SQ_NM);
 	}
 }
