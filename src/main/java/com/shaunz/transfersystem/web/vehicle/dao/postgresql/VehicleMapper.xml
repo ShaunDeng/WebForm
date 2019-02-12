@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shaunz.transfersystem.web.vehicle.dao.VehicleMapper">
+  <resultMap id="BaseResultMap" type="com.shaunz.transfersystem.web.vehicle.entity.Vehicle">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="driver_id" jdbcType="VARCHAR" property="driverId" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="plate_number" jdbcType="VARCHAR" property="plateNumber" />
+    <result column="capacity" jdbcType="VARCHAR" property="capacity" />
+    <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, driver_id, brand, model, color, plate_number, capacity, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_vehicle
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_vehicle
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.transfersystem.web.vehicle.entity.Vehicle">
+    insert into tb_vehicle (id, driver_id, brand, 
+      model, color, plate_number, 
+      capacity, close_flg)
+    values (#{id,jdbcType=VARCHAR}, #{driverId,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{plateNumber,jdbcType=VARCHAR}, 
+      #{capacity,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.vehicle.entity.Vehicle">
+    insert into tb_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="driverId != null">
+        driver_id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="plateNumber != null">
+        plate_number,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="closeFlg != null">
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="driverId != null">
+        #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNumber != null">
+        #{plateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null">
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.transfersystem.web.vehicle.entity.Vehicle">
+    update tb_vehicle
+    <set>
+      <if test="driverId != null">
+        driver_id = #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNumber != null">
+        plate_number = #{plateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null">
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.transfersystem.web.vehicle.entity.Vehicle">
+    update tb_vehicle
+    set driver_id = #{driverId,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      plate_number = #{plateNumber,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=VARCHAR},
+      close_flg = #{closeFlg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

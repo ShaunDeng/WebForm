@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shaunz.transfersystem.web.order.dao.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.shaunz.transfersystem.web.order.entity.OrderDetail">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="hdr_id" jdbcType="VARCHAR" property="hdrId" />
+    <result column="passenger_id" jdbcType="VARCHAR" property="passengerId" />
+    <result column="departure_place" jdbcType="VARCHAR" property="departurePlace" />
+    <result column="destination" jdbcType="VARCHAR" property="destination" />
+    <result column="income" jdbcType="VARCHAR" property="income" />
+    <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hdr_id, passenger_id, departure_place, destination, income, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_dtl
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_order_dtl
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
+    insert into tb_order_dtl (id, hdr_id, passenger_id, 
+      departure_place, destination, income, 
+      close_flg)
+    values (#{id,jdbcType=VARCHAR}, #{hdrId,jdbcType=VARCHAR}, #{passengerId,jdbcType=VARCHAR}, 
+      #{departurePlace,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}, 
+      #{closeFlg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
+    insert into tb_order_dtl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hdrId != null">
+        hdr_id,
+      </if>
+      <if test="passengerId != null">
+        passenger_id,
+      </if>
+      <if test="departurePlace != null">
+        departure_place,
+      </if>
+      <if test="destination != null">
+        destination,
+      </if>
+      <if test="income != null">
+        income,
+      </if>
+      <if test="closeFlg != null">
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="hdrId != null">
+        #{hdrId,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerId != null">
+        #{passengerId,jdbcType=VARCHAR},
+      </if>
+      <if test="departurePlace != null">
+        #{departurePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null">
+        #{income,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null">
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
+    update tb_order_dtl
+    <set>
+      <if test="hdrId != null">
+        hdr_id = #{hdrId,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerId != null">
+        passenger_id = #{passengerId,jdbcType=VARCHAR},
+      </if>
+      <if test="departurePlace != null">
+        departure_place = #{departurePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null">
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="income != null">
+        income = #{income,jdbcType=VARCHAR},
+      </if>
+      <if test="closeFlg != null">
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
+    update tb_order_dtl
+    set hdr_id = #{hdrId,jdbcType=VARCHAR},
+      passenger_id = #{passengerId,jdbcType=VARCHAR},
+      departure_place = #{departurePlace,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      income = #{income,jdbcType=VARCHAR},
+      close_flg = #{closeFlg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shaunz.transfersystem.web.passenger.dao.PassengerMapper">
+  <resultMap id="BaseResultMap" type="com.shaunz.transfersystem.web.passenger.entity.Passenger">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="day_of_birth" jdbcType="TIMESTAMP" property="dayOfBirth" />
+    <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, phone_number, gender, day_of_birth, close_flg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_passenger
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_passenger
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shaunz.transfersystem.web.passenger.entity.Passenger">
+    insert into tb_passenger (id, name, phone_number, 
+      gender, day_of_birth, close_flg
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{dayOfBirth,jdbcType=TIMESTAMP}, #{closeFlg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.passenger.entity.Passenger">
+    insert into tb_passenger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="dayOfBirth != null">
+        day_of_birth,
+      </if>
+      <if test="closeFlg != null">
+        close_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="dayOfBirth != null">
+        #{dayOfBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeFlg != null">
+        #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.transfersystem.web.passenger.entity.Passenger">
+    update tb_passenger
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="dayOfBirth != null">
+        day_of_birth = #{dayOfBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeFlg != null">
+        close_flg = #{closeFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.transfersystem.web.passenger.entity.Passenger">
+    update tb_passenger
+    set name = #{name,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      day_of_birth = #{dayOfBirth,jdbcType=TIMESTAMP},
+      close_flg = #{closeFlg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
