@@ -147,6 +147,6 @@ INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon) VAL
 INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('23', 'Vehicle', '22', './vehicle/vehicle_lst.html', 'N','glyphicon glyphicon-plane','tb_vehicle');
 INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('24', 'Driver', '22', './driver/driver_lst.html', 'N','glyphicon glyphicon-user','tb_driver');
 INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('25', 'Passenger', '22', './passenger/passenger_lst.html', 'N','glyphicon glyphicon-briefcase','tb_passenger');
-INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('26', 'PassengerQueue', '22', './passengerq/passengerq_lst.html', 'N','glyphicon glyphicon-indent-left','tb_passenger_q');
-INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('27', 'TransferQueue', '22', './transferq/transferq_lst.html', 'N','glyphicon glyphicon-indent-right','tb_transfer_q');
-INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('28', 'TransferOrder', '22', './transferorder/transferorder_lst.html', 'N','glyphicon glyphicon-list-alt','tb_order_hdr');
+INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('26', 'PassengerQueue', '22', './passengerQueue/passengerQueue_lst.html', 'N','glyphicon glyphicon-indent-left','tb_passenger_q');
+INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('27', 'TransferQueue', '22', './transferQueue/transferQueue_lst.html', 'N','glyphicon glyphicon-indent-right','tb_transfer_q');
+INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon,tb_nm) VALUES ('28', 'TransferOrder', '22', './transferOrder/transferOrder_lst.html', 'N','glyphicon glyphicon-list-alt','tb_order_hdr');

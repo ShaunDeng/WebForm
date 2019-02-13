@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header" th:text="#{vehicle.title}"></h2>
+  		<h2 class="sub-header" th:text="#{passengerQueue.title}"></h2>
   		<div class="row">
         	<div class="col-sm-3 col-md-2"><button class="btn btn-md btn-primary glyphicon glyphicon-plus" onClick="openAddPage()" th:inline="text"> [[#{common.new}]]</button></div>
         </div>
@@ -13,28 +13,28 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#',[[#{vehicle.brand}]],[[#{vehicle.model}]],[[#{vehicle.color}]],[[#{vehicle.plateNumber}]],[[#{vehicle.capacity}]]],
-				column:['id','brand','model','color','plateNumber','capacity'],
-				url:'./vehicle',
+				header:['#',[[#{passengerQueue.passengerId}]],[[#{passengerQueue.departurePlace}]],[[#{passengerQueue.destination}]],[[#{passengerQueue.registerTime}]],[[#{passengerQueue.departureTime}]],[[#{passengerQueue.capacity}]]],
+				column:['id','passengerId','departurePlace','destination','registerTime','departureTime','capacity'],
+				url:'./passengerQueue',
 				httpType:'GET',
 				target:'table',
 				operations:{
 					'detail':function(obj){
-						Shaunz.showDetail('23',obj.data.id);
+						Shaunz.showDetail('26',obj.data.id);
 					},
 					'edit':function(obj){
-						Shaunz.load("./vehicle/vehicle_edit.html?id="+obj.data.id);
+						Shaunz.load("./passengerQueue/passengerQueue_edit.html?id="+obj.data.id);
 					},
 					'delt':function(obj){
 						$.confirm({
-						    title: 'Delete ' + obj.data.plateNumber +' ?',
+						    title: 'Delete ' + obj.data.name +' ?',
 						    autoClose: 'cancelAction|8000',
 						    buttons: {
 						        deleteUser: {
 						            text: 'Delete',
 						            action: function () {
-						            	Shaunz.ajaxRequest(null,'./driver/'+obj.data.id,'DELETE');
-										Shaunz.load("./vehicle/vehicle_lst.html");
+						            	Shaunz.ajaxRequest(null,'./passengerQueue/'+obj.data.id,'DELETE');
+										Shaunz.load("./passengerQueue/passengerQueue_lst.html");
 						            }
 						        },
 						        cancelAction: function () {
@@ -50,7 +50,7 @@
 		});
 		
 		openAddPage = function(){
-			Shaunz.load("./vehicle/vehicle_add.html");
+			Shaunz.load("./passengerQueue/passengerQueue_add.html");
 		}
 		
 	</script>
