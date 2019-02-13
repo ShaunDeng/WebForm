@@ -1,5 +1,7 @@
 package com.shaunz.transfersystem.web.vehicle.dao;
 
+import java.util.List;
+
 import com.shaunz.transfersystem.web.vehicle.entity.Vehicle;
 
 public interface VehicleMapper {
@@ -14,4 +16,6 @@ public interface VehicleMapper {
     int updateByPrimaryKeySelective(Vehicle record);
 
     int updateByPrimaryKey(Vehicle record);
+    
+    List<Vehicle> queryList();
 }

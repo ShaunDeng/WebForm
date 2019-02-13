@@ -1,8 +1,8 @@
 package com.shaunz.transfersystem.web.vehicle.entity;
 
-public class Vehicle {
-    private String id;
+import com.shaunz.framework.core.BaseEntity;
 
+public class Vehicle extends BaseEntity{
     private String driverId;
 
     private String brand;
@@ -16,15 +16,6 @@ public class Vehicle {
     private String capacity;
 
     private String closeFlg;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
-
     public String getDriverId() {
         return driverId;
     }

@@ -47,4 +47,12 @@
 			id name parentId startTime endTime
 		</tableColumn>
 	</function>	
+	<function id="24" title="driver">
+		<tableHeader>
+			# name gender phoneNumber driveLicenseNumber
+		</tableHeader>
+		<tableColumn>
+			id name gender phoneNumber driveLicenseNumber
+		</tableColumn>
+	</function>
 </functions>

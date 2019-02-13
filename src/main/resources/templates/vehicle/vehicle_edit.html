@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{vehicle.title}"></a></h2>
+       	<form id="editForm">
+       	  <div class="form-group row">
+		    <label for="brand" class="col-sm-2 col-form-label" th:text="#{vehicle.brand}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="brand" name="brand" th:attr="placeholder=#{vehicle.brand.placeHolder}" th:value="${vehicle.brand}"/>
+		    	<input type="hidden" class="form-control" id="id" name="id" th:value="${vehicle.id}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="model" class="col-sm-2 col-form-label" th:text="#{vehicle.model}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="model" name="model" th:attr="placeholder=#{vehicle.model.placeHolder}" th:value="${vehicle.model}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="color" class="col-sm-2 col-form-label" th:text="#{vehicle.color}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="color" name="color" th:attr="placeholder=#{vehicle.color.placeHolder}" th:value="${vehicle.color}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="plateNumber" class="col-sm-2 col-form-label" th:text="#{vehicle.plateNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="plateNumber" name="plateNumber" th:attr="placeholder=#{vehicle.plateNumber.placeHolder}" th:value="${vehicle.plateNumber}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="capacity" class="col-sm-2 col-form-label" th:text="#{vehicle.capacity}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="capacity" name="capacity" th:attr="placeholder=#{vehicle.capacity.placeHolder}" th:value="${vehicle.capacity}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+   		  <div class="form-group row">
+		    <label for="driverId" class="col-sm-2 col-form-label" th:text="#{vehicle.driverId}"></label>
+		    <div class="input-group col-sm-6">
+		    	<input type="text" class="form-control" id="driverId" name="driverId" th:attr="placeholder=#{vehicle.driverId.placeHolder}"  th:value="${vehicle.driverId}"/>
+		    	<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th pop-picker"></span>
+                </span>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	var inputIdFunctionMap = {
+  			'driverId':'24'
+  	}
+  	$(function () {
+  		Shaunz.preparePopChooseBox(inputIdFunctionMap);
+        $('#editForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+        		brand: {
+					required: true,
+					maxlength: 50
+				},
+				model: {
+					required: true,
+					maxlength: 20
+				},
+				color: {
+					required: true,
+					maxlength: 20
+				},
+				plateNumber: {
+					required: true,
+					maxlength: 20
+				},
+				capacity: {
+					required: true,
+					maxlength: 3
+				},
+				driverId: {
+					required: true
+				}
+			},
+			messages: {
+				brand: {
+					required: [[#{validation.vehicle.brand.required}]],
+					maxlength: [[#{validation.vehicle.brand.minlength(${50})}]]
+				},
+				model: {
+					required: [[#{validation.vehicle.model.required}]],
+					maxlength: [[#{validation.vehicle.model.maxlength(${20})}]]
+				},
+				color: {
+					required: [[#{validation.vehicle.color.required}]],
+					maxlength: [[#{validation.vehicle.color.maxlength(${20})}]]
+				},
+				plateNumber: {
+					required: [[#{validation.vehicle.plateNumber.required}]],
+					maxlength: [[#{validation.vehicle.plateNumber.maxlength(${20})}]]
+				},
+				capacity: {
+					required: [[#{validation.vehicle.plateNumber.required}]],
+					maxlength: [[#{validation.vehicle.plateNumber.maxlength(${3})}]]
+				},
+				driverId: {
+					required: [[#{validation.vehicle.driverId.required}]],
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./vehicle','PUT');
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./vehicle/vehicle_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./vehicle/vehicle_lst.html');
+        });
+    });
+	</script>
+</html>
