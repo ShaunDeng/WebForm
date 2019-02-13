@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shaunz.transfersystem.web.order.dao.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.shaunz.transfersystem.web.order.entity.Order">
+<mapper namespace="com.shaunz.transfersystem.web.order.dao.OrderHdrMapper">
+  <resultMap id="BaseResultMap" type="com.shaunz.transfersystem.web.order.entity.OrderHdr">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="vehicle_id" jdbcType="VARCHAR" property="vehicleId" />
     <result column="departure_place" jdbcType="VARCHAR" property="departurePlace" />
@@ -9,11 +9,12 @@
     <result column="departure_time" jdbcType="TIMESTAMP" property="departureTime" />
     <result column="arrive_time" jdbcType="TIMESTAMP" property="arriveTime" />
     <result column="total_income" jdbcType="VARCHAR" property="totalIncome" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
   </resultMap>
   <sql id="Base_Column_List">
     id, vehicle_id, departure_place, destination, departure_time, arrive_time, total_income, 
-    close_flg
+    status, close_flg
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,15 +26,17 @@
     delete from tb_order_hdr
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.shaunz.transfersystem.web.order.entity.Order">
+  <insert id="insert" parameterType="com.shaunz.transfersystem.web.order.entity.OrderHdr">
     insert into tb_order_hdr (id, vehicle_id, departure_place, 
       destination, departure_time, arrive_time, 
-      total_income, close_flg)
+      total_income, status, close_flg
+      )
     values (#{id,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{departurePlace,jdbcType=VARCHAR}, 
       #{destination,jdbcType=VARCHAR}, #{departureTime,jdbcType=TIMESTAMP}, #{arriveTime,jdbcType=TIMESTAMP}, 
-      #{totalIncome,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR})
+      #{totalIncome,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.order.entity.Order">
+  <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.order.entity.OrderHdr">
     insert into tb_order_hdr
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -56,6 +59,9 @@
       </if>
       <if test="totalIncome != null">
         total_income,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="closeFlg != null">
         close_flg,
@@ -83,12 +89,15 @@
       <if test="totalIncome != null">
         #{totalIncome,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         #{closeFlg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.transfersystem.web.order.entity.Order">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shaunz.transfersystem.web.order.entity.OrderHdr">
     update tb_order_hdr
     <set>
       <if test="vehicleId != null">
@@ -109,13 +118,16 @@
       <if test="totalIncome != null">
         total_income = #{totalIncome,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         close_flg = #{closeFlg,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shaunz.transfersystem.web.order.entity.Order">
+  <update id="updateByPrimaryKey" parameterType="com.shaunz.transfersystem.web.order.entity.OrderHdr">
     update tb_order_hdr
     set vehicle_id = #{vehicleId,jdbcType=VARCHAR},
       departure_place = #{departurePlace,jdbcType=VARCHAR},
@@ -123,6 +135,7 @@
       departure_time = #{departureTime,jdbcType=TIMESTAMP},
       arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
       total_income = #{totalIncome,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
       close_flg = #{closeFlg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

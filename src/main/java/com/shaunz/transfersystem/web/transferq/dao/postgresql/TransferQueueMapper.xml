@@ -8,10 +8,12 @@
     <result column="destination" jdbcType="VARCHAR" property="destination" />
     <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
     <result column="departure_time" jdbcType="TIMESTAMP" property="departureTime" />
+    <result column="capacity" jdbcType="VARCHAR" property="capacity" />
     <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, vehicle_id, departure_place, destination, register_time, departure_time, close_flg
+    id, vehicle_id, departure_place, destination, register_time, departure_time, capacity, 
+    close_flg
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -26,10 +28,10 @@
   <insert id="insert" parameterType="com.shaunz.transfersystem.web.transferq.entity.TransferQueue">
     insert into tb_transfer_q (id, vehicle_id, departure_place, 
       destination, register_time, departure_time, 
-      close_flg)
+      capacity, close_flg)
     values (#{id,jdbcType=VARCHAR}, #{vehicleId,jdbcType=VARCHAR}, #{departurePlace,jdbcType=VARCHAR}, 
       #{destination,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{departureTime,jdbcType=TIMESTAMP}, 
-      #{closeFlg,jdbcType=VARCHAR})
+      #{capacity,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.transferq.entity.TransferQueue">
     insert into tb_transfer_q
@@ -51,6 +53,9 @@
       </if>
       <if test="departureTime != null">
         departure_time,
+      </if>
+      <if test="capacity != null">
+        capacity,
       </if>
       <if test="closeFlg != null">
         close_flg,
@@ -75,6 +80,9 @@
       <if test="departureTime != null">
         #{departureTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         #{closeFlg,jdbcType=VARCHAR},
       </if>
@@ -98,6 +106,9 @@
       <if test="departureTime != null">
         departure_time = #{departureTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         close_flg = #{closeFlg,jdbcType=VARCHAR},
       </if>
@@ -111,6 +122,7 @@
       destination = #{destination,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
       departure_time = #{departureTime,jdbcType=TIMESTAMP},
+      capacity = #{capacity,jdbcType=VARCHAR},
       close_flg = #{closeFlg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

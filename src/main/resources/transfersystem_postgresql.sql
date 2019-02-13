@@ -125,6 +125,7 @@ CREATE TABLE public.tb_order_dtl
   departure_place character varying(50),
   destination character varying(50),
   income character varying(10) default '0',
+  status character varying(10) default 'new',--new,confirm
   close_flg character varying(1) default 'N',
   CONSTRAINT tb_order_dtl_pkey PRIMARY KEY (id),
   CONSTRAINT tb_order_dtl_hdr_id_fkey FOREIGN KEY (hdr_id)
@@ -138,8 +139,8 @@ WITH (
   OIDS=FALSE
 );
 
-
-
+delete from tb_sys_log where CAST(function_id AS integer) >= 22 and CAST(function_id AS integer) <= 28;
+delete from tb_role_function_authority where CAST(function_id AS integer) >= 22 and CAST(function_id AS integer) <= 28;
 delete from public.tb_function where CAST(id AS integer) >= 22 and CAST(id AS integer) <= 28;
 
 INSERT INTO public.tb_function("id", "name", parent_id, url, close_flg,icon) VALUES ('22', 'TransferSystem', '22', '#', 'N','glyphicon glyphicon-transfer');

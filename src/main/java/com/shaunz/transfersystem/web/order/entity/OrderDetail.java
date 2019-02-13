@@ -13,6 +13,8 @@ public class OrderDetail {
 
     private String income;
 
+    private String status;
+
     private String closeFlg;
 
     public String getId() {
@@ -61,6 +63,14 @@ public class OrderDetail {
 
     public void setIncome(String income) {
         this.income = income == null ? null : income.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public String getCloseFlg() {
