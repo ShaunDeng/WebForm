@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <body>
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{passenger.title}"></a></h2>
+       	<form id="addForm">
+       	  <div class="form-group row">
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{passenger.name}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{passenger.name.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+		  <div class="form-group row">
+		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{passenger.gender}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<select class="form-control" id="gender" name="gender">
+				  <option value="Male" th:text="#{passenger.gender.male}"></option>
+				  <option value="Female" th:text="#{passenger.gender.female}"></option>
+				</select>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+  		  <div class="form-group row">
+		  	<label for="dayOfBirth" class="col-sm-2 col-form-label" th:text="#{passenger.dayOfBirth}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerDob'>
+               	<input type="text" class="form-control" id="dayOfBirth" name="dayOfBirth" th:attr="placeholder=#{passenger.dayOfBirth.placeHolder}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+		    <label for="phoneNumber" class="col-sm-2 col-form-label" th:text="#{passenger.phoneNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:attr="placeholder=#{passenger.phoneNumber.placeHolder}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="row">
+			    <div class="col-sm-3 col-sm-offset-5">
+			    	<button id="submit" type="submit" class="btn btn-primary glyphicon glyphicon-ok black" th:inline="text"> [[#{common.submit}]]</button>
+		  			<button type="reset" class="btn btn-primary glyphicon glyphicon-repeat" th:inline="text"> [[#{common.reset}]]</button>
+		  			<button id="goBack" type="button" class="btn btn-primary glyphicon glyphicon-share-alt" th:inline="text"> [[#{common.goBack}]]</button>
+			    </div>
+			</div>
+		</form>
+        <br/>
+  </body>
+  	<script type="text/javascript" th:inline="javascript">
+  	$(function () {
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var dobDatePicker = $('#datetimepickerDob').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd 00:00:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        $('#addForm').validate({
+        	debug: true,
+        	onfocusout: true,
+        	rules: {
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 100
+				},
+				dayOfBirth: {
+					required: true
+				},
+				phoneNumber: {
+					required: true,
+					maxlength: 20
+				}
+			},
+			messages: {
+				name: {
+					required: [[#{validation.passenger.name.required}]],
+					minlength: [[#{validation.passenger.name.minlength(${2})}]],
+					maxlength: [[#{validation.passenger.name.minlength(${100})}]]
+				},
+				dayOfBirth: {
+					required: [[#{validation.passenger.dayOfBirth.required}]]
+				},
+				phoneNumber: {
+					required: [[#{validation.passenger.phoneNumber.required}]],
+					maxlength: [[#{validation.passenger.phoneNumber.maxlength(${20})}]]
+				}
+			},
+			errorPlacement: function(error, element) {
+				var nextElement = element.parent().parent().find(".col-sm-4").find("span");
+			    error.addClass("text-danger").insertAfter(nextElement);
+			},
+			submitHandler:function(form){
+				Shaunz.submitForm(form,'./passenger','POST');
+				form.reset();
+			}
+  		});
+        
+        $('#goBack').click(function(){
+        	Shaunz.load('./passenger/passenger_lst.html');
+        });
+        $('#header').click(function(){
+        	Shaunz.load('./passenger/passenger_lst.html');
+        });
+    });
+	</script>
+</html>

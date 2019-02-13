@@ -1,5 +1,7 @@
 package com.shaunz.transfersystem.web.passenger.dao;
 
+import java.util.List;
+
 import com.shaunz.transfersystem.web.passenger.entity.Passenger;
 
 public interface PassengerMapper {
@@ -14,4 +16,6 @@ public interface PassengerMapper {
     int updateByPrimaryKeySelective(Passenger record);
 
     int updateByPrimaryKey(Passenger record);
+    
+    List<Passenger> queryList();
 }

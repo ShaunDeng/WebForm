@@ -19,15 +19,15 @@ public class VehiclePageController extends BaseController{
 	VehicleService vehicleService;
 	
 	@RequestMapping(value="/vehicle/vehicle_lst.html",method=RequestMethod.GET)
-	public String authorLstPage(){
+	public String lstPage(){
 		return "vehicle/vehicle_lst";
 	}
 	@RequestMapping(value="/vehicle/vehicle_add.html",method=RequestMethod.GET)
-	public String authorAddPage(){
+	public String addPage(){
 		return "vehicle/vehicle_add";
 	}
 	@RequestMapping(value="/vehicle/vehicle_edit.html",method=RequestMethod.GET)
-	public ModelAndView authorEditPage(String id){
+	public ModelAndView editPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		Vehicle vehicle = vehicleService.selectByPrimaryKey(id);
 		result.put("vehicle", vehicle);
