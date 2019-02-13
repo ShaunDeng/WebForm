@@ -1,67 +1,89 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
-  		<h2 class="sub-header"><a href="#" id="header" th:text="#{author.title}"></a></h2>
-       	<form id="authorEditForm">
+  		<h2 class="sub-header"><a href="#" id="header" th:text="#{driver.title}"></a></h2>
+       	<form id="editForm">
        	  <div class="form-group row">
-		    <label for="loginName" class="col-sm-2 col-form-label" th:text="#{author.userNm}"></label>
+		    <label for="name" class="col-sm-2 col-form-label" th:text="#{driver.name}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{author.userNm.placeHolder}" th:value="${author.name}"/>
-		    	<input type="hidden" name="id" th:value="${author.id}"/>
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{driver.name.placeHolder}" th:value="${driver.name}"/>
+		    	<input type="hidden" class="form-control" id="id" name="id" th:value="${driver.id}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
 		    </div>
 		  </div>
+		  <br/>
 		  <div class="form-group row">
-		    <label for="email" class="col-sm-2 col-form-label" th:text="#{author.email}"></label>
-		    <div class="nopadding col-sm-6">
-		    	<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" th:attr="placeholder=#{author.email.placeHolder}" th:value="${author.email}"/>
-		    	<small id="emailHelp" class="form-text text-muted" th:text="#{author.email.help}"></small>
-		    </div>
-		    <div class="col-sm-4">
-		    	<span></span>
-		    </div>
-		  </div>
-		  <div class="form-group row">
-		    <label for="password" class="col-sm-2 col-form-label" th:text="#{author.password}"></label>
-		    <div class="nopadding col-sm-6">
-		    	<input type="password" class="form-control" id="pwd" name="pwd" th:attr="placeholder=#{author.password.placeHolder}" th:value="${author.pwd}"/>
-		    </div>
-		    <div class="col-sm-4">
-		    	<span></span>
-		    </div>
-		  </div>
-		  <div class="form-group row">
-		    <label for="aliasName" class="col-sm-2 col-form-label" th:text="#{author.aliasNm}"></label>
-		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="aliasNm" name="aliasNm" th:attr="placeholder=#{author.aliasNm.placeHolder}" th:value="${author.aliasNm}"/>
-		    </div>
-		    <div class="col-sm-4">
-		    	<span></span>
-		    </div>
-		  </div>
-		  <div class="form-group row">
-		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{author.gender}"></label>
+		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{driver.gender}"></label>
 		    <div class="nopadding col-sm-6">
 		    	<select class="form-control" id="gender" name="gender">
-				  <option th:selected="${author.gender eq 'male'}" value="Male" th:text="#{author.gender.male}"></option>
-				  <option th:selected="${author.gender eq 'Female'}" value="Female" th:text="#{author.gender.female}"></option>
+				  <th:block th:switch="${driver.gender}">
+		    			<th:block th:case="Male">
+		    				<option selected value="Male" th:text="#{driver.gender.male}"></option>
+					  		<option value="Female" th:text="#{driver.gender.female}"></option>
+		    			</th:block>
+		    			<th:block th:case="Female">
+		    				<option value="Male" th:text="#{driver.gender.male}"></option>
+					  		<option selected value="Female" th:text="#{driver.gender.female}"></option>
+		    			</th:block>
+		    		</th:block>
 				</select>
+				
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
 		    </div>
 		  </div>
+		  <br/>
+  		  <div class="form-group row">
+		  	<label for="dayOfBirth" class="col-sm-2 col-form-label" th:text="#{driver.dob}"></label>
+            <div class='input-group date col-sm-6' id='datetimepickerDob'>
+               	<input type="text" class="form-control" id="dayOfBirth" name="dayOfBirth" th:attr="placeholder=#{driver.dob.placeHolder}"  th:value="${driver.dayOfBirthString}"/>
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-remove"></span> | 
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+          </div>
+          <br/>
           <div class="form-group row">
-		    <label for="lockUpN" class="col-sm-2 col-form-label" th:text="#{author.lockUp}"></label>
+		    <label for="phoneNumber" class="col-sm-2 col-form-label" th:text="#{driver.phoneNumber}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpY" value="Y" th:checked="${author.lockUp eq 'Y'}"/>
-				  <label class="form-check-label" for="lockUpY" th:text="#{common.yes}"></label>
-				  <input class="form-check-input" type="radio" name="lockUp" id="lockUpN" value="N" th:checked="${author.lockUp eq 'N'}"/>
-				  <label class="form-check-label" for="lockUpN" th:text="#{common.no}"></label>
-				</div>
+		    	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:attr="placeholder=#{driver.phoneNumber.placeHolder}" th:value="${driver.phoneNumber}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="idNumber" class="col-sm-2 col-form-label" th:text="#{driver.idNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="idNumber" name="idNumber" th:attr="placeholder=#{driver.idNumber.placeHolder}" th:value="${driver.idNumber}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="driveLicenseNumber" class="col-sm-2 col-form-label" th:text="#{driver.driveLicenseNumber}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="driveLicenseNumber" name="driveLicenseNumber" th:attr="placeholder=#{driver.driveLicenseNumber.placeHolder}" th:value="${driver.driveLicenseNumber}"/>
+		    </div>
+		    <div class="col-sm-4">
+		    	<span></span>
+		    </div>
+		  </div>
+		  <br/>
+          <div class="form-group row">
+		    <label for="drivingYears" class="col-sm-2 col-form-label" th:text="#{driver.drivingYears}"></label>
+		    <div class="nopadding col-sm-6">
+		    	<input type="text" class="form-control" id="drivingYears" name="drivingYears" th:attr="placeholder=#{driver.drivingYears.placeHolder}" th:value="${driver.drivingYears}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -79,46 +101,68 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
   	$(function () {
-        $('#authorEditForm').validate({
+  		var resLocale = (navigator.language||navigator.userLanguage).toLowerCase();
+        var dobDatePicker = $('#datetimepickerDob').datetimepicker({
+        	language: resLocale,
+        	format: "yyyy-mm-dd 00:00:00",
+        	autoclose: true,
+        	todayBtn: true,
+        	todayHighlight: true,
+        	showMeridian: true
+        });
+        $('#editForm').validate({
         	debug: true,
         	onfocusout: true,
         	rules: {
-        		name: {
+				name: {
 					required: true,
 					minlength: 2,
 					maxlength: 100
 				},
-				email: {
-					required: true,
-					email: true
+				dayOfBirth: {
+					required: true
 				},
-				pwd: {
+				phoneNumber: {
 					required: true,
-					minlength: 8,
-					maxlength: 100
+					maxlength: 20
 				},
-				aliasNm: {
+				idNumber: {
 					required: true,
-					minlength: 2,
-					maxlength: 100
+					maxlength: 20
+				},
+				driveLicenseNumber: {
+					required: true,
+					maxlength: 20
+				},
+				drivingYears: {
+					required: true,
+					maxlength: 3
 				}
 			},
 			messages: {
 				name: {
-					required: [[#{validation.author.name.required}]],
-					minlength: [[#{validation.author.name.minlength(${2})}]],
-					maxlength: [[#{validation.author.name.minlength(${100})}]]
+					required: [[#{validation.driver.name.required}]],
+					minlength: [[#{validation.driver.name.minlength(${2})}]],
+					maxlength: [[#{validation.driver.name.minlength(${100})}]]
 				},
-				email: [[#{validation.author.email}]],
-				pwd: {
-					required: [[#{validation.author.password.required}]],
-					minlength: [[#{validation.author.password.minlength(${2})}]],
-					maxlength: [[#{validation.author.password.minlength(${100})}]]
+				dayOfBirth: {
+					required: [[#{validation.driver.dayOfBirth.required}]]
 				},
-				aliasNm: {
-					required: [[#{validation.author.aliasNm.required}]],
-					minlength: [[#{validation.author.aliasNm.minlength(${2})}]],
-					maxlength: [[#{validation.author.aliasNm.minlength(${100})}]]
+				phoneNumber: {
+					required: [[#{validation.driver.phoneNumber.required}]],
+					maxlength: [[#{validation.driver.phoneNumber.maxlength(${20})}]]
+				},
+				idNumber: {
+					required: [[#{validation.driver.idNumber.required}]],
+					maxlength: [[#{validation.driver.idNumber.maxlength(${20})}]]
+				},
+				driveLicenseNumber: {
+					required: [[#{validation.driver.driveLicenseNumber.required}]],
+					maxlength: [[#{validation.driver.driveLicenseNumber.maxlength(${20})}]]
+				},
+				drivingYears: {
+					required: [[#{validation.driver.drivingYears.required}]],
+					maxlength: [[#{validation.driver.drivingYears.maxlength(${3})}]]
 				}
 			},
 			errorPlacement: function(error, element) {
@@ -126,15 +170,16 @@
 			    error.addClass("text-danger").insertAfter(nextElement);
 			},
 			submitHandler:function(form){
-				Shaunz.submitForm(form,'./author','PUT');
+				Shaunz.submitForm(form,'./driver','PUT');
+				form.reset();
 			}
   		});
         
         $('#goBack').click(function(){
-        	Shaunz.load('./author/author_lst.html');
+        	Shaunz.load('./driver/driver_lst.html');
         });
         $('#header').click(function(){
-        	Shaunz.load('./author/author_lst.html');
+        	Shaunz.load('./driver/driver_lst.html');
         });
     });
 	</script>

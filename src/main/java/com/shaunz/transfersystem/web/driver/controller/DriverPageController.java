@@ -14,7 +14,7 @@ import com.shaunz.transfersystem.web.driver.entity.Driver;
 import com.shaunz.transfersystem.web.driver.service.DriverService;
 
 @Controller
-public class PageController extends BaseController{
+public class DriverPageController extends BaseController{
 	@Autowired
 	DriverService driverService;
 	
@@ -30,6 +30,7 @@ public class PageController extends BaseController{
 	public ModelAndView authorEditPage(String id){
 		Map<String, Object> result = new HashMap<String, Object>();
 		Driver driver = driverService.selectByPrimaryKey(id);
+		driver.dateConverter();
 		result.put("driver", driver);
 		return new ModelAndView("driver/driver_edit",result);
 	}

@@ -13,7 +13,7 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#',[[#{driver.name}]],[[#{driver.gender}]],[[#{driver.phoneNo}]],[[#{driver.driveLicenseNo}]],[[#{driver.driveYear}]]],
+				header:['#',[[#{driver.name}]],[[#{driver.gender}]],[[#{driver.phoneNumber}]],[[#{driver.driveLicenseNumber}]],[[#{driver.drivingYears}]]],
 				column:['id','name','gender','phoneNumber','driveLicenseNumber','drivingYears'],
 				translate:['gender'],
 				url:'./driver',
@@ -24,11 +24,11 @@
 						Shaunz.showDetail('24',obj.data.id);
 					},
 					'edit':function(obj){
-						Shaunz.load("./author/author_edit.html?id="+obj.data.id);
+						Shaunz.load("./driver/driver_edit.html?id="+obj.data.id);
 					},
 					'delt':function(obj){
 						$.confirm({
-						    title: 'Delete ' + obj.data.aliasNm +' ?',
+						    title: 'Delete ' + obj.data.name +' ?',
 						    autoClose: 'cancelAction|8000',
 						    buttons: {
 						        deleteUser: {

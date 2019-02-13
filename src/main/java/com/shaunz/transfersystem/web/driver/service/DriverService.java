@@ -22,20 +22,20 @@ public class DriverService extends BaseService{
 		return driverMapper.selectByPrimaryKey(id);
 	}
 
-	public boolean insertSelective(Driver author) {
-		return driverMapper.insertSelective(author) == 1;
+	public boolean insertSelective(Driver driver) {
+		return driverMapper.insertSelective(driver) == 1;
 	}
 
-	public boolean updateByPrimaryKeySelective(Driver author) {
-		return driverMapper.updateByPrimaryKeySelective(author) == 1;
+	public boolean updateByPrimaryKeySelective(Driver driver) {
+		return driverMapper.updateByPrimaryKeySelective(driver) == 1;
 	}
 
 	public boolean deleteByPrimaryKey(String id) {
 		return driverMapper.deleteByPrimaryKey(id) == 1;
 	}
 	
-	public boolean closeAuthor(Driver author){
-		author.setCloseFlg("Y");
-		return updateByPrimaryKeySelective(author);
+	public boolean closeDriver(Driver driver){
+		driver.setCloseFlg("Y");
+		return updateByPrimaryKeySelective(driver);
 	}
 }
