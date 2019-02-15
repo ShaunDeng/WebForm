@@ -25,7 +25,7 @@ public class ListenerConfiguration {
 	
 	private Connector createsStandardConnector(){
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-		connector.setPort(8080);
+		connector.setPort(80);
 		return connector;
 	}
 }

@@ -1,3 +1,4 @@
+--docker run -it -v ~/tmp/docker:/home/shaun --network host shaunzwork/webform
 drop SEQUENCE transfer_sq;
 drop table public.tb_order_dtl;
 drop table public.tb_order_hdr;
