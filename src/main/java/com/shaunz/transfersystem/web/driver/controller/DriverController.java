@@ -30,7 +30,7 @@ public class DriverController extends BaseController{
 	
 	@RequiresPermissions("24.query")
 	@GetMapping("/driver")
-	public String authorLst(){
+	public String lst(){
 		List<Driver> drivers = driverService.queryList();
 		return convertToJsonString(drivers);
 	}
@@ -38,7 +38,7 @@ public class DriverController extends BaseController{
 	@RequiresPermissions("24.add")
 	@PostMapping("/driver")
 	@ShaunzAuditLog(optType="add",functionId="24")
-	public String authorAdd(Driver driver,BindingResult bindingResult,Locale locale){
+	public String add(Driver driver,BindingResult bindingResult,Locale locale){
 		Map<String, String> results = new HashMap<String, String>();
 		if(bindingResult.hasErrors()){
 			results.put("result", "error");
@@ -58,7 +58,7 @@ public class DriverController extends BaseController{
 	@RequiresPermissions("24.update")
 	@PutMapping("/driver")
 	@ShaunzAuditLog(optType="update",functionId="24")
-	public String authorEdit(Driver driver,Locale locale){
+	public String edit(Driver driver,Locale locale){
 		boolean flag = driverService.updateByPrimaryKeySelective(driver);
 		driver.setOptFlag(flag);
 		return formSubmitResult(flag, "common.updateMsg", new Object[]{messageSource.getMessage("driver.title", null, locale),driver.getName()}
@@ -66,11 +66,11 @@ public class DriverController extends BaseController{
 	}
 	
 	@RequiresPermissions("24.delete")
-	@DeleteMapping("/driver")
+	@DeleteMapping("/driver/{id}")
 	@ShaunzAuditLog(optType="delete",functionId="24")
-	public String authorDelete(@PathVariable("id") String id,Locale locale){
+	public String delete(@PathVariable("id") String id,Locale locale){
 		Driver driver = driverService.selectByPrimaryKey(id);
-		boolean flag = driverService.closeAuthor(driver);
+		boolean flag = driverService.closeDriver(driver);
 		return formSubmitResult(flag, "common.deleteMsg", new Object[]{messageSource.getMessage("driver.title", null, locale),driver.getName()}
 		, locale);
 	}

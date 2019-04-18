@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
   		<h2 class="sub-header"><a href="#" id="header" th:text="#{driver.title}"></a></h2>
-       	<form id="editForm">
+       	<form id="addForm">
        	  <div class="form-group row">
 		    <label for="name" class="col-sm-2 col-form-label" th:text="#{driver.name}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{driver.name.placeHolder}" th:value="${driver.name}"/>
-		    	<input type="hidden" class="form-control" id="id" name="id" th:value="${driver.id}"/>
+		    	<input type="text" class="form-control" id="name" name="name" th:attr="placeholder=#{driver.name.placeHolder}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -18,18 +17,9 @@
 		    <label for="gender" class="col-sm-2 col-form-label" th:text="#{driver.gender}"></label>
 		    <div class="nopadding col-sm-6">
 		    	<select class="form-control" id="gender" name="gender">
-				  <th:block th:switch="${driver.gender}">
-		    			<th:block th:case="Male">
-		    				<option selected value="Male" th:text="#{driver.gender.male}"></option>
-					  		<option value="Female" th:text="#{driver.gender.female}"></option>
-		    			</th:block>
-		    			<th:block th:case="Female">
-		    				<option value="Male" th:text="#{driver.gender.male}"></option>
-					  		<option selected value="Female" th:text="#{driver.gender.female}"></option>
-		    			</th:block>
-		    		</th:block>
+				  <option value="Male" th:text="#{driver.gender.male}"></option>
+				  <option value="Female" th:text="#{driver.gender.female}"></option>
 				</select>
-				
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -39,7 +29,7 @@
   		  <div class="form-group row">
 		  	<label for="dayOfBirth" class="col-sm-2 col-form-label" th:text="#{driver.dob}"></label>
             <div class='input-group date col-sm-6' id='datetimepickerDob'>
-               	<input type="text" class="form-control" id="dayOfBirth" name="dayOfBirth" th:attr="placeholder=#{driver.dob.placeHolder}"  th:value="${driver.dayOfBirthString}"/>
+               	<input type="text" class="form-control" id="dayOfBirth" name="dayOfBirth" th:attr="placeholder=#{driver.dob.placeHolder}"/>
                 <span class="input-group-addon">
                 	<span class="glyphicon glyphicon-remove"></span> | 
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -53,7 +43,7 @@
           <div class="form-group row">
 		    <label for="phoneNumber" class="col-sm-2 col-form-label" th:text="#{driver.phoneNumber}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:attr="placeholder=#{driver.phoneNumber.placeHolder}" th:value="${driver.phoneNumber}"/>
+		    	<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:attr="placeholder=#{driver.phoneNumber.placeHolder}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -63,7 +53,7 @@
           <div class="form-group row">
 		    <label for="idNumber" class="col-sm-2 col-form-label" th:text="#{driver.idNumber}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="idNumber" name="idNumber" th:attr="placeholder=#{driver.idNumber.placeHolder}" th:value="${driver.idNumber}"/>
+		    	<input type="text" class="form-control" id="idNumber" name="idNumber" th:attr="placeholder=#{driver.idNumber.placeHolder}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -73,7 +63,7 @@
           <div class="form-group row">
 		    <label for="driveLicenseNumber" class="col-sm-2 col-form-label" th:text="#{driver.driveLicenseNumber}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="driveLicenseNumber" name="driveLicenseNumber" th:attr="placeholder=#{driver.driveLicenseNumber.placeHolder}" th:value="${driver.driveLicenseNumber}"/>
+		    	<input type="text" class="form-control" id="driveLicenseNumber" name="driveLicenseNumber" th:attr="placeholder=#{driver.driveLicenseNumber.placeHolder}"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -83,7 +73,7 @@
           <div class="form-group row">
 		    <label for="drivingYears" class="col-sm-2 col-form-label" th:text="#{driver.drivingYears}"></label>
 		    <div class="nopadding col-sm-6">
-		    	<input type="text" class="form-control" id="drivingYears" name="drivingYears" th:attr="placeholder=#{driver.drivingYears.placeHolder}" th:value="${driver.drivingYears}"/>
+		    	<input type="text" class="form-control" id="drivingYears" name="drivingYears" th:attr="placeholder=#{driver.drivingYears.placeHolder}" value="1"/>
 		    </div>
 		    <div class="col-sm-4">
 		    	<span></span>
@@ -110,7 +100,7 @@
         	todayHighlight: true,
         	showMeridian: true
         });
-        $('#editForm').validate({
+        $('#addForm').validate({
         	debug: true,
         	onfocusout: true,
         	rules: {
@@ -170,7 +160,8 @@
 			    error.addClass("text-danger").insertAfter(nextElement);
 			},
 			submitHandler:function(form){
-				Shaunz.submitForm(form,'./driver','PUT');
+				Shaunz.submitForm(form,'./driver','POST');
+				form.reset();
 			}
   		});
         

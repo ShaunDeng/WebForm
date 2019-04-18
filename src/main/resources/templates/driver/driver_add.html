@@ -124,7 +124,7 @@
 					required: true,
 					maxlength: 20
 				},
-				drivingYears {
+				drivingYears: {
 					required: true,
 					maxlength: 3
 				}
@@ -153,6 +153,20 @@
 				drivingYears {
 					required: true,
 					maxlength: 3
+					required: [[#{validation.driver.phoneNumber.required}]],
+					maxlength: [[#{validation.driver.phoneNumber.maxlength(${20})}]]
+				},
+				idNumber: {
+					required: [[#{validation.driver.idNumber.required}]],
+					maxlength: [[#{validation.driver.idNumber.maxlength(${20})}]]
+				},
+				driveLicenseNumber: {
+					required: [[#{validation.driver.driveLicenseNumber.required}]],
+					maxlength: [[#{validation.driver.driveLicenseNumber.maxlength(${20})}]]
+				},
+				drivingYears: {
+					required: [[#{validation.driver.drivingYears.required}]],
+					maxlength: [[#{validation.driver.drivingYears.maxlength(${3})}]]
 				}
 			},
 			errorPlacement: function(error, element) {

@@ -15,18 +15,18 @@
     <javaTypeResolver >
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
-    <javaModelGenerator targetPackage="com.shaunz.webform.web.blogmap.entity" targetProject="WebFormSpringBoot">
+    <javaModelGenerator targetPackage="com.shaunz.transfersystem.web.order.entity" targetProject="WebFormSpringBoot">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.shaunz.webform.web.blogmap.dao.postgresql"  targetProject="WebFormSpringBoot">
+    <sqlMapGenerator targetPackage="com.shaunz.transfersystem.web.order.dao.postgresql"  targetProject="WebFormSpringBoot">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.shaunz.webform.web.blogmap.dao"  targetProject="WebFormSpringBoot">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.shaunz.transfersystem.web.order.dao"  targetProject="WebFormSpringBoot">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
     <!-- Table -->
-    <table schema="" tableName="tb_blog_page_map" domainObjectName="BlogMap" 
+    <table schema="" tableName="tb_order_dtl" domainObjectName="OrderDetail" 
         enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">     

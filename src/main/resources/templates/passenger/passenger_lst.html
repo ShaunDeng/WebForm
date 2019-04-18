@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="https://www.pollix.at/thymeleaf/shiro">
   <body>
-  		<h2 class="sub-header" th:text="#{driver.title}"></h2>
+  		<h2 class="sub-header" th:text="#{passenger.title}"></h2>
   		<div class="row">
         	<div class="col-sm-3 col-md-2"><button class="btn btn-md btn-primary glyphicon glyphicon-plus" onClick="openAddPage()" th:inline="text"> [[#{common.new}]]</button></div>
         </div>
@@ -13,18 +13,18 @@
   </body>
   	<script type="text/javascript" th:inline="javascript">
 		var TableParam = {
-				header:['#',[[#{driver.name}]],[[#{driver.gender}]],[[#{driver.phoneNumber}]],[[#{driver.driveLicenseNumber}]],[[#{driver.drivingYears}]]],
-				column:['id','name','gender','phoneNumber','driveLicenseNumber','drivingYears'],
+				header:['#',[[#{passenger.name}]],[[#{passenger.gender}]],[[#{passenger.phoneNumber}]],[[#{passenger.dayOfBirth}]]],
+				column:['id','name','gender','phoneNumber','dayOfBirth'],
 				translate:['gender'],
-				url:'./driver',
+				url:'./passenger',
 				httpType:'GET',
 				target:'table',
 				operations:{
 					'detail':function(obj){
-						Shaunz.showDetail('24',obj.data.id);
+						Shaunz.showDetail('25',obj.data.id);
 					},
 					'edit':function(obj){
-						Shaunz.load("./driver/driver_edit.html?id="+obj.data.id);
+						Shaunz.load("./passenger/passenger_edit.html?id="+obj.data.id);
 					},
 					'delt':function(obj){
 						$.confirm({
@@ -34,8 +34,8 @@
 						        deleteUser: {
 						            text: 'Delete',
 						            action: function () {
-						            	Shaunz.ajaxRequest(null,'./driver/'+obj.data.id,'DELETE');
-										Shaunz.load("./driver/driver_lst.html");
+						            	Shaunz.ajaxRequest(null,'./passenger/'+obj.data.id,'DELETE');
+										Shaunz.load("./passenger/passenger_lst.html");
 						            }
 						        },
 						        cancelAction: function () {
@@ -51,7 +51,7 @@
 		});
 		
 		openAddPage = function(){
-			Shaunz.load("./driver/driver_add.html");
+			Shaunz.load("./passenger/passenger_add.html");
 		}
 		
 	</script>

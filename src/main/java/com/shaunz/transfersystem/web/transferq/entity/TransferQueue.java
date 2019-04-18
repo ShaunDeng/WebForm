@@ -15,6 +15,8 @@ public class TransferQueue {
 
     private Date departureTime;
 
+    private String capacity;
+
     private String closeFlg;
 
     public String getId() {
@@ -63,6 +65,14 @@ public class TransferQueue {
 
     public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity == null ? null : capacity.trim();
     }
 
     public String getCloseFlg() {

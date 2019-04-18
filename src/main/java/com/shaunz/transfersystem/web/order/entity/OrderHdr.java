@@ -2,7 +2,7 @@ package com.shaunz.transfersystem.web.order.entity;
 
 import java.util.Date;
 
-public class Order {
+public class OrderHdr {
     private String id;
 
     private String vehicleId;
@@ -16,6 +16,8 @@ public class Order {
     private Date arriveTime;
 
     private String totalIncome;
+
+    private String status;
 
     private String closeFlg;
 
@@ -73,6 +75,14 @@ public class Order {
 
     public void setTotalIncome(String totalIncome) {
         this.totalIncome = totalIncome == null ? null : totalIncome.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public String getCloseFlg() {

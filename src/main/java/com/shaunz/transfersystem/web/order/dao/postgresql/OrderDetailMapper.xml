@@ -8,10 +8,11 @@
     <result column="departure_place" jdbcType="VARCHAR" property="departurePlace" />
     <result column="destination" jdbcType="VARCHAR" property="destination" />
     <result column="income" jdbcType="VARCHAR" property="income" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="close_flg" jdbcType="VARCHAR" property="closeFlg" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, hdr_id, passenger_id, departure_place, destination, income, close_flg
+    id, hdr_id, passenger_id, departure_place, destination, income, status, close_flg
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
     insert into tb_order_dtl (id, hdr_id, passenger_id, 
       departure_place, destination, income, 
-      close_flg)
+      status, close_flg)
     values (#{id,jdbcType=VARCHAR}, #{hdrId,jdbcType=VARCHAR}, #{passengerId,jdbcType=VARCHAR}, 
       #{departurePlace,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}, 
-      #{closeFlg,jdbcType=VARCHAR})
+      #{status,jdbcType=VARCHAR}, #{closeFlg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shaunz.transfersystem.web.order.entity.OrderDetail">
     insert into tb_order_dtl
@@ -51,6 +52,9 @@
       </if>
       <if test="income != null">
         income,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="closeFlg != null">
         close_flg,
@@ -75,6 +79,9 @@
       <if test="income != null">
         #{income,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         #{closeFlg,jdbcType=VARCHAR},
       </if>
@@ -98,6 +105,9 @@
       <if test="income != null">
         income = #{income,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
       <if test="closeFlg != null">
         close_flg = #{closeFlg,jdbcType=VARCHAR},
       </if>
@@ -111,6 +121,7 @@
       departure_place = #{departurePlace,jdbcType=VARCHAR},
       destination = #{destination,jdbcType=VARCHAR},
       income = #{income,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
       close_flg = #{closeFlg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
