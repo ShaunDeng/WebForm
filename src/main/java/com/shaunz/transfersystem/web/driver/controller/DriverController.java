@@ -21,7 +21,7 @@ import com.shaunz.framework.web.base.BaseController;
 import com.shaunz.transfersystem.web.driver.entity.Driver;
 import com.shaunz.transfersystem.web.driver.service.DriverService;
 
-@RestController("/driver")
+@RestController
 public class DriverController extends BaseController{
 	@Autowired
 	SequenceGenerator sequenceGenerator;
@@ -29,14 +29,14 @@ public class DriverController extends BaseController{
 	DriverService driverService;
 	
 	@RequiresPermissions("24.query")
-	@GetMapping()
+	@GetMapping("/driver")
 	public String authorLst(){
 		List<Driver> drivers = driverService.queryList();
 		return convertToJsonString(drivers);
 	}
 	
 	@RequiresPermissions("24.add")
-	@PostMapping
+	@PostMapping("/driver")
 	@ShaunzAuditLog(optType="add",functionId="24")
 	public String authorAdd(Driver driver,BindingResult bindingResult,Locale locale){
 		Map<String, String> results = new HashMap<String, String>();
@@ -56,7 +56,7 @@ public class DriverController extends BaseController{
 	}
 	
 	@RequiresPermissions("24.update")
-	@PutMapping
+	@PutMapping("/driver")
 	@ShaunzAuditLog(optType="update",functionId="24")
 	public String authorEdit(Driver driver,Locale locale){
 		boolean flag = driverService.updateByPrimaryKeySelective(driver);
@@ -66,7 +66,7 @@ public class DriverController extends BaseController{
 	}
 	
 	@RequiresPermissions("24.delete")
-	@DeleteMapping
+	@DeleteMapping("/driver")
 	@ShaunzAuditLog(optType="delete",functionId="24")
 	public String authorDelete(@PathVariable("id") String id,Locale locale){
 		Driver driver = driverService.selectByPrimaryKey(id);
