@@ -52,7 +52,7 @@ public class ShaunzApplicationListener implements ApplicationListener<Applicatio
 		}
 		
 		if(event instanceof ContextStartedEvent){
-			dapplicationStarted(event);
+			applicationStarted(event);
 			return ;
 		}
 
@@ -101,7 +101,7 @@ public class ShaunzApplicationListener implements ApplicationListener<Applicatio
 	    log.info("Application Refreshed...");
 	}
 	
-	private void dapplicationStarted(ApplicationEvent event){
+	private void applicationStarted(ApplicationEvent event){
 		log.info("Application Started...");
 	}
 	

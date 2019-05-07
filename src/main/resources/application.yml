@@ -1,5 +1,7 @@
 shaunzwork:
-  home: /home/shaun/uploaded
+  home: /home/shaun/uploaded/
+  tmpFolder: tmp/
+  imageFolder: images/
 server:
   context-path: /
   compression:
@@ -46,7 +48,7 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
   servlet:
     multipart:
-      location: ${shaunzwork.home}/tmp/
+      location: ${shaunzwork.home}${shaunzwork.tmpFolder}
       max-file-size: 5Mb
       max-request-size: 10Mb
 springboot:

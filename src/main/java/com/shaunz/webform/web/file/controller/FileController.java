@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.shaunz.configurations.ShaunzProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shaunz.framework.common.utils.IArrayListUtil;
 import com.shaunz.framework.common.utils.IStringUtil;
 import com.shaunz.framework.common.utils.MultipartFileUtil;
-import com.shaunz.framework.core.YgdrasilConst;
 import com.shaunz.framework.web.base.BaseController;
 
 @Controller
 public class FileController extends BaseController{
+	@Autowired
+	private ShaunzProperties shaunzProperties;
 	private static String[] IMAGE_SUBFIX = {"png","bmp","dib","jpg","jpeg","jpe","jfif","gif","notify()","tiff"};
 	@RequestMapping(value="/file/image_lst.html")
 	public String imagePage(){
@@ -43,10 +46,10 @@ public class FileController extends BaseController{
 	@ResponseBody
 	public String imageLst(String path){
 		List<Map<String, String>> imageLst = null;
-		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = shaunzProperties.getHome()+shaunzProperties.getImageFolder()+(path.equals("/")?"":path);
 		File imageFolder = new File(imageDir);
 		if(imageFolder.exists()){
-			imageLst = listFilesForFolder(imageFolder,YgdrasilConst.WEB_UPLOAD_PATH,path);
+			imageLst = listFilesForFolder(imageFolder,shaunzProperties.getHome(),path);
 		}
 		return convertToJsonString(imageLst);
 	}
@@ -61,7 +64,7 @@ public class FileController extends BaseController{
 				if(IStringUtil.isBlank(fileNm)){
 					fileNm = "img_"+new Date().getTime();
 				}
-				imageUrl = MultipartFileUtil.uploadFileReNmIfExist(file, YgdrasilConst.WEB_UPLOAD_PATH, YgdrasilConst.CUSTOMER_IMAGE_PATH,fileNm);
+				imageUrl = MultipartFileUtil.uploadFileReNmIfExist(file, shaunzProperties.getHome(), shaunzProperties.getImageFolder(),fileNm);
 				if(IStringUtil.notBlank(imageUrl)){
 					flag = true;
 				}
@@ -76,7 +79,7 @@ public class FileController extends BaseController{
 	@RequestMapping(value = "/file/image", method = RequestMethod.GET)
     @ResponseBody
     public void downloadImage(String fileNms,String path,HttpServletResponse response) throws Exception {
-		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = shaunzProperties.getHome()+shaunzProperties.getImageFolder()+(path.equals("/")?"":path);
 		String[] fileNmArr = fileNms.split(",");
 		List<File> images = new ArrayList<File>();
 		if(!IArrayListUtil.isBlankArray(fileNmArr)){
@@ -90,7 +93,7 @@ public class FileController extends BaseController{
 		}
 		
 		try {
-			File outputFile = new File(YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_DOWNLOAD_TMP_FOLDER+"download_"+new Date().getTime()+".zip");
+			File outputFile = new File(shaunzProperties.getHome()+shaunzProperties.getTmpFolder()+"download_"+new Date().getTime()+".zip");
 			if(images.size() ==1){
 				outputFile = images.get(0);
 			} else if(images.size() > 1){
@@ -108,7 +111,7 @@ public class FileController extends BaseController{
 	public String deleteImage(String fileNms,String path,Locale locale){
 		boolean flag = false;
 		List<String> failedLst = new ArrayList<String>();
-		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = shaunzProperties.getHome()+shaunzProperties.getImageFolder()+(path.equals("/")?"":path);
 		String[] fileNmArr = fileNms.split(",");
 		if(!IArrayListUtil.isBlankArray(fileNmArr)){
 			for (int i = 0; i < fileNmArr.length; i++) {
@@ -135,7 +138,7 @@ public class FileController extends BaseController{
 	@ResponseBody
 	public String createFolder(String name,String path,Locale locale){
 		boolean flag = false;
-		String imageDir = YgdrasilConst.WEB_UPLOAD_PATH+YgdrasilConst.CUSTOMER_IMAGE_PATH+(path.equals("/")?"":path);
+		String imageDir = shaunzProperties.getHome()+shaunzProperties.getImageFolder()+(path.equals("/")?"":path);
 		File folder = new File(imageDir+name);
 		if(folder.isDirectory()&&!folder.exists()){
 			flag = folder.mkdir();
