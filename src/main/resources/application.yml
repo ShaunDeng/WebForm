@@ -1,0 +1,57 @@
+shaunzwork:
+  home: /home/shaun/uploaded
+server:
+  context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response: 2048
+  ssl:
+    key-store: ${shaunzwork.home}/tls/cert.pfx
+    key-store-password: EJYa923H
+    keyStoreType: PKCS12
+  port: 9000
+  #http2:
+    #enabled: true
+web:
+  upload-path: ${shaunzwork.home}/
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/webform
+    username: Shaun
+    password: 199079
+  aop:
+    proxy-target-class: true
+  cache:
+    ehcache:
+      #config: classpath:/ehcache.xml
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+  messages:
+    encoding: UTF-8
+    cache-seconds: 1
+    basename: static/webresources/i18n/messages
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
+  servlet:
+    multipart:
+      location: ${shaunzwork.home}/tmp/
+      max-file-size: 5Mb
+      max-request-size: 10Mb
+springboot:
+  mvc:
+    static-path-pattern: /**
+mybatis:
+  mapperLocations: classpath:com/shaunz/*/*/*/dao/postgresql/*.xml
+

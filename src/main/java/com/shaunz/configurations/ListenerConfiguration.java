@@ -19,13 +19,13 @@ public class ListenerConfiguration {
 	@Bean
 	public ServletWebServerFactory serverFactory(){
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-		tomcat.addAdditionalTomcatConnectors(createsStandardConnector());
+		//tomcat.addAdditionalTomcatConnectors(createsStandardConnector());
 		return tomcat;
 	}
 	
 	private Connector createsStandardConnector(){
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-		connector.setPort(80);
+		connector.setPort(8080);
 		return connector;
 	}
 }
